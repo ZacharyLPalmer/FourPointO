@@ -1,0 +1,94 @@
+.nav{
+  margin: 25px;
+  height: 75px;
+  text-align:center;
+}
+.nav li{
+  display:inline;
+}
+.nav li button{
+  height: 75px;
+  width: 200px;
+  display:inline-block;
+  background-color: grey;
+}
+
+.active{
+  color: white;
+}
+
+  .button {
+    border: 10px;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
+    display: inline-block;
+  }
+
+  body {
+    text-align: center;
+  }
+
+  #overallDisplay {
+    width: 500px;
+    display: inline-block;
+  }
+
+  #courseInfo {
+    display: inline-block;
+    width: 500px;
+  }
+
+  .Ogpa {
+    background-color: lightgray;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
+    float: left;
+    
+  }
+
+  .OMgpa {
+    background-color: lightgray;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
+    float: right;
+  }
+
+img {
+    width: 600px;
+  }
+
+table {
+  text-align: center;
+  display: inline-block;
+}
+
+.semester {
+margin: 50px;
+width: 800px;
+text-align: center;
+display: inline-block;
+}
+
+.Currentgrade {
+  background-color: lightgray;
+  text-align: center;
+  width: 200px;
+  height: 40px;
+}
+
+.course {
+  text-align: center;
+display: inline-block;
+width: 900px;
+}
+
+#courseInfo {
+  text-align: center;
+  display: inline-block; 
+}
