@@ -3,27 +3,59 @@
 <head>
   <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
+
+<!--Top nav bar-->
 <ul class="nav">
-  <li><button class="active" href="#GPACalculation">GPA Calculation</button></li>
-  <li><button href="#GradeCalculation">Grade Calculation</button></li>
-  <li><button href="#GradeDistribution">Grade Distribution</button></li>
-  <li><button href="#My Grades">My Grades</button></li>
+  <li>
+    <form method="post" action="GPACalc.html">
+      <button class="active" type="submit">GPA Calculation</button>
+    </form>
+  </li>
+  <li>
+    <form method="post" action="GradeCalc.html">
+      <button type="submit">Grade Calculation</button>
+    </form>
+  </li>
+  <li>
+    <form method="post" action="GradeDistri.html">
+      <button type="submit">Grade Distribution</button>
+    </form>
+  </li>
+  <li>
+    <form method="post" action="MyGrades.html">
+      <button type="submit">My Grades</button>
+    </form>
+  </li>
 </ul>
-<div>
+
+<!--logo div-->
+<div class="logo">
   <img src="media/logo.png" alt="logo">
 </div>
-<div id="overallDisplay">
-  <div class = "Ogpa">overall gpa: </div>
-  <div class = "OMgpa">overall major gpa: </div>
+
+
+<div class="overallDisplay">
+  <!--displays your overall gpa/major gpa -->
+  <div class="leftGPA" name="GPA">overall gpa: </div>
+  <div class="rightGPA" name="majorGPA">overall major gpa: </div>
+  <!--displays your overall gpa/major gpa -->
   <button class="button">Add Semester</button>
 </div>
+
 <div class="semesterList">
+
+  <!--This will be a div that gets duplicated and 
+  removed as semesters get added or removed dynamically
+  -->
   <div class="semester">
-    Semester Name
-    <input type="text" name="semesterName">
-    <button type="submit">Delete</button>
-    <table>
-      <div class="classList">
+    <div class="semesterName">Semester Name
+      <input type="text" name="semesterName-0">
+      <button type="submit" name="deleteSemester-0">Delete</button>
+    </div>
+    <div class="classList">
+      <table>
+
+        <!--Heading for the course list table for this semester-->
         <tr>
           <th>Major?</th>
           <th>Course Name</th>
@@ -32,81 +64,29 @@
           <th>GPA</th>
           <th>Delete</th>
         </tr>
-        <div class="class">
+
+        <!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->
+        <div class="course">
           <tr>
-            <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-            <td><input type="checkbox" name="major" value="major"></td>
-            <td><input type="text" name="courseName"></td>
-            <td><input type="text" name="courseGrade"></td>
-            <td><input type="text" name="creditNumber"></td>
-            <td>
-              <div>-.--</div>
-            </td>
-            <td><button type="submit">Delete</button></td>
+            <td><input type="checkbox" name="major-0-0" value="major"></td>
+            <td><input type="text" name="courseName-0-0"></td>
+            <td><input type="text" name="courseGrade-0-0"></td>
+            <td><input type="text" name="creditNumber-0-0"></td>
+            <td><div name="GPAOutput-0-0">-.--</div></td>
+            <td><button type="submit" name="deleteCourse-0-0">Delete</button></td>
           </tr>
         </div>
 
-        <div class="class">
-          <tr>
-            <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-            <td><input type="checkbox" name="major" value="major"></td>
-            <td><input type="text" name="courseName"></td>
-            <td><input type="text" name="courseGrade"></td>
-            <td><input type="text" name="creditNumber"></td>
-            <td>
-              <div>-.--</div>
-            </td>
-            <td><button type="submit">Delete</button></td>
-          </tr>
-        </div>
+        <!--Here is where other courses would get added -->
+      </table>
 
-        <div class="class">
-          <tr>
-            <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-            <td><input type="checkbox" name="major" value="major"></td>
-            <td><input type="text" name="courseName"></td>
-            <td><input type="text" name="courseGrade"></td>
-            <td><input type="text" name="creditNumber"></td>
-            <td>
-              <div>-.--</div>
-            </td>
-            <td><button type="submit">Delete</button></td>
-          </tr>
-        </div>
-
-        <div class="class">
-          <tr>
-            <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-            <td><input type="checkbox" name="major" value="major"></td>
-            <td><input type="text" name="courseName"></td>
-            <td><input type="text" name="courseGrade"></td>
-            <td><input type="text" name="creditNumber"></td>
-            <td>
-              <div>-.--</div>
-            </td>
-            <td><button type="submit">Delete</button></td>
-          </tr>
-        </div>
-
-        <div class="class">
-          <tr>
-            <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-            <td><input type="checkbox" name="major" value="major"></td>
-            <td><input type="text" name="courseName"></td>
-            <td><input type="text" name="courseGrade"></td>
-            <td><input type="text" name="creditNumber"></td>
-            <td>
-              <div>-.--</div>
-            </td>
-            <td><button type="submit">Delete</button></td>
-          </tr>
-        </div>
+      <div class="overallDisplay">
+        <!--output divs for major and normal gpa for this semester-->
+        <div class="leftGPA" name="GPA-0">gpa: </div>
+        <div class="rightGPA" name="majorGPA-0">major gpa: </div>
+        <!--button to add course to this semester-->
+        <button class="button" name="addCourse-0">Add course</button>
       </div>
-    </table>
-    <div id="courseInfo">
-        <div class = "Ogpa">gpa: </div>
-        <div class = "OMgpa">major gpa: </div>
-        <button class="button">Add course</button>
     </div>
   </div>
 </div>

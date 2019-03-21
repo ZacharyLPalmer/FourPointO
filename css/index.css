@@ -1,36 +1,53 @@
 .nav{
   margin: 25px;
   height: 75px;
+  width: 820px;
+  display:inline-block;
   text-align:center;
 }
+
 .nav li{
-  display:inline;
+  display:inline-block;
+  text-align:center;
 }
+
 .nav li button{
   height: 75px;
   width: 200px;
+  font-size: 22px;
+  border: 10px;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   display:inline-block;
-  background-color: grey;
+  background-color: slategrey;
+}
+
+.classGrade{
+  padding: 35px;
 }
 
 .active{
   color: white;
 }
 
-  .button {
-    border: 10px;
-    text-align: center;
-    width: 200px;
-    height: 40px;
-    margin: 10px;
-    display: inline-block;
-  }
+.semesterName{
+  padding-bottom:25px;
+}
+
+.button {
+  border: 10px;
+  width: 200px;
+  height: 40px;
+  margin: 10px;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  display:inline-block;
+}
 
   body {
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
     text-align: center;
   }
 
-  #overallDisplay {
+  .overallDisplay {
     width: 500px;
     display: inline-block;
   }
@@ -40,23 +57,32 @@
     width: 500px;
   }
 
-  .Ogpa {
+  .leftGPA {
     background-color: lightgray;
-    text-align: center;
     width: 200px;
     height: 40px;
     margin: 10px;
     float: left;
-    
+    position: relative;
   }
 
-  .OMgpa {
+
+  .rightGPA {
     background-color: lightgray;
     text-align: center;
     width: 200px;
     height: 40px;
     margin: 10px;
     float: right;
+  }
+
+  .currentGrade {
+    background-color: lightgray;
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
   }
 
 img {
@@ -67,6 +93,8 @@ table {
   text-align: center;
   display: inline-block;
 }
+
+
 
 .semester {
 margin: 50px;
