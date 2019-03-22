@@ -2,6 +2,12 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 </head>
 
 <!--Top nav bar-->
@@ -39,7 +45,7 @@
   <div class="leftGPA" name="GPA">overall gpa: </div>
   <div class="rightGPA" name="majorGPA">overall major gpa: </div>
   <!--displays your overall gpa/major gpa -->
-  <button class="button">Add Semester</button>
+  <button class="button" name="addSemester">Add Semester</button>
 </div>
 
 <div class="semesterList">
@@ -47,13 +53,13 @@
   <!--This will be a div that gets duplicated and 
   removed as semesters get added or removed dynamically
   -->
-  <div class="semester">
+  <div class="semester" name="semester-1">
     <div class="semesterName">Semester Name
-      <input type="text" name="semesterName-0">
-      <button type="submit" name="deleteSemester-0">Delete</button>
+      <input type="text" name="semesterName-1">
+      <button type="submit" class="deleteSemester" name="1">Delete</button>
     </div>
-    <div class="classList">
-      <table>
+    <div>
+      <table class="classList-1">
 
         <!--Heading for the course list table for this semester-->
         <tr>
@@ -66,29 +72,27 @@
         </tr>
 
         <!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->
-        <div class="course">
-          <tr>
-            <td><input type="checkbox" name="major-0-0" value="major"></td>
-            <td><input type="text" name="courseName-0-0"></td>
-            <td><input type="text" name="courseGrade-0-0"></td>
-            <td><input type="text" name="creditNumber-0-0"></td>
-            <td><div name="GPAOutput-0-0">-.--</div></td>
-            <td><button type="submit" name="deleteCourse-0-0">Delete</button></td>
-          </tr>
-        </div>
+        <tr name="course-1-1">
+          <td><input type="checkbox" name="major-1-1" value="major"></td>
+          <td><input type="text" name="courseName-1-1"></td>
+          <td><input type="text" name="courseGrade-1-1"></td>
+          <td><input type="text" name="creditNumber-1-1"></td>
+          <td><div name="GPAOutput-1-1">-.--</div></td>
+          <td><button type="submit" class="deleteCourse" semester="1" course="1">Delete</button></td>
+        </tr>
 
         <!--Here is where other courses would get added -->
       </table>
 
       <div class="overallDisplay">
         <!--output divs for major and normal gpa for this semester-->
-        <div class="leftGPA" name="GPA-0">gpa: </div>
-        <div class="rightGPA" name="majorGPA-0">major gpa: </div>
+        <div class="leftGPA" name="GPA-1">gpa: </div>
+        <div class="rightGPA" name="majorGPA-1">major gpa: </div>
         <!--button to add course to this semester-->
-        <button class="button" name="addCourse-0">Add course</button>
+        <button class="button addCourse" name="1">Add course</button>
       </div>
     </div>
   </div>
 </div>
-
+<script src="js/GPACalc.js"></script>
 </html>
