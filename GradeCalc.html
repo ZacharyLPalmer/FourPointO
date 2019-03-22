@@ -1,82 +1,86 @@
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Four Point O</title>
+  </head>
 
-<head>
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-</head>
+  <body>
+    <!--Top nav bar-->
+    <ul class="nav">
+      <li>
+        <form method="post" action="GPACalc.html">
+          <button type="submit">GPA Calculation</button>
+        </form>
+      </li>
+      <li>
+        <form method="post" action="GradeCalc.html">
+          <button class="active" type="submit">Grade Calculation</button>
+        </form>
+      </li>
+      <li>
+        <form method="post" action="GradeDistri.html">
+          <button type="submit">Grade Distribution</button>
+        </form>
+      </li>
+      <li>
+        <form method="post" action="MyGrades.html">
+          <button type="submit">My Grades</button>
+        </form>
+      </li>
+    </ul>
 
-<!--Top nav bar-->
-<ul class="nav">
-  <li>
-    <form method="post" action="GPACalc.html">
-      <button type="submit">GPA Calculation</button>
-    </form>
-  </li>
-  <li>
-    <form method="post" action="GradeCalc.html">
-      <button class="active" type="submit">Grade Calculation</button>
-    </form>
-  </li>
-  <li>
-    <form method="post" action="GradeDistri.html">
-      <button type="submit">Grade Distribution</button>
-    </form>
-  </li>
-  <li>
-    <form method="post" action="MyGrades.html">
-      <button type="submit">My Grades</button>
-    </form>
-  </li>
-</ul>
-
-<!--logo div-->
-<div class="logo">
-    <img src="media/logo.png" alt="logo">
-</div>
-
-<!--top bar information for the displayed course-->
-<table class="overallDisplay">
-  <tr>
-    <th>Course Name</th>
-    <th>Credit #</th>
-    <th>Major?</th>
-  </tr>
-  <tr>
-    <td><input type="text" name="semesterName"></td>
-    <td><input type="text" name="creditNumber"></td>
-    <td><input type="checkbox" name="major" value="major"></td>
-  </tr>
-</table>
-
-<div class="classGrade">
-  <table>
-    <div class="categoryList">
-      <tr>
-        <th>Category</th>
-        <th>Weight</th>
-        <th>Average</th>
-        <th>Delete</th>
-      </tr>
-      
-      <!--This will be a div that gets duplicated and removed as catagories
-      get added or removed dynamically-->
-      <div class="catagory">
-        <tr>
-          <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-          <td><input type="text" name="catName-0"></td>
-          <td><input type="text" name="catWeight-0"></td>
-          <td><input type="text" name="catAvg-0"></td>
-          <td><button type="submit" name="deleteCat-0">Delete</button></td>
-        </tr>
-      </div>
+    <!--logo div-->
+    <div class="logo">
+        <img src="media/logo.png" alt="logo">
     </div>
-  </table>
-</div>
 
-<!--current semester grades displayed along with the save course and addcatagory oprions-->
-<div id="overallDisplay">
-  <button class="button" name="addCat"><a>Add Catagory</a></button>
-  <div class="currentGrade" name="currentGrade">Current Grade: </div>
-  <button class="button" name="saveCourse">Save Course</button>
-</div>
+    <!--top bar information for the displayed course-->
+    <table class="overallDisplay">
+      <tr>
+        <th>Course Name</th>
+        <th>Credit #</th>
+        <th>Major?</th>
+      </tr>
+      <tr>
+        <td><input type="text" name="semesterName"></td>
+        <td><input type="text" name="creditNumber"></td>
+        <td><input type="checkbox" name="major" value="major"></td>
+      </tr>
+    </table>
 
+    <div class="classGrade">
+      <table class="categoryList" id="catList">
+        <tr>
+          <th>Category</th>
+          <th>Weight %</th>
+          <th>Average %</th>
+          <th>Delete</th>
+        </tr>
+          
+        <!--This gets duplicated and removed as categories get added or removed dynamically-->
+          
+        <tr class="category" name="cat-0">
+          <td><input type="text" name="catName-0"></td>
+          <td><input type="text" class="weight" name="catWeight-0"></td>
+          <td><input type="text" class="avg" name="catAvg-0"></td>
+          <td><button type="submit" class="deleteCat" category="0">Delete</button></td>
+        </tr>
+
+      </table>
+    </div>
+
+    <!--current semester grades displayed along with the save course and addcategory options-->
+    <div id="overallDisplay">
+      <button class="button" name="addCat"><a>Add Catagory</a></button>
+      <div class="currentGrade" name="currentGrade">Current Grade: </div>
+      <button class="button" name="saveCourse">Save Course</button>
+    </div>
+
+    <!-- Javascript and Jquery sources -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="js/GradeCalc.js"></script>
+    
+  </body>
 </html>
