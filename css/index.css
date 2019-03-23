@@ -47,8 +47,17 @@
     text-align: center;
   }
 
+  .container {
+    width: 900px;
+    text-align: center;
+    display:inline-block;
+  }
+
+
+
   .overallDisplay {
     width: 500px;
+    text-align: center;
     display: inline-block;
   }
 
@@ -94,7 +103,12 @@ table {
   display: inline-block;
 }
 
-
+.semesterList {
+  width: 800px;
+  text-align: center;
+  display: inline-block;
+  }
+  
 
 .semester {
 margin: 50px;
@@ -113,7 +127,7 @@ display: inline-block;
 .course {
   text-align: center;
 display: inline-block;
-width: 900px;
+width: 800px;
 }
 
 #courseInfo {

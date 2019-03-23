@@ -1,53 +1,106 @@
-var numberSemesters = 1;
-var arrayOfCourseNumbers = [1];
+
+
+
+
+//total number of all the courses and semester made even including the deleted ones
+var uniqueSemesterID = 0;
+var uniqueCourseID = 0;
+
+//array of all the active semester id's
+var activeSemesterIDs = [];
+var activeCourseIDs = [[]];
+
+function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            console.log("test");
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+
+function printInfo() {
+    console.log("uniqueCourseID: " + uniqueCourseID);
+    console.log("uniqueSemesterID: " + uniqueSemesterID);
+    console.log("activeCourseIDs: " + activeCourseIDs); 
+    console.log("activeSemesterIDs: " + activeSemesterIDs);
+}
+
+function newSemester() {
+    $(".semesterList").prepend(printNewSemesterToScreen());
+    //add another semester id to the array
+    activeSemesterIDs.push(uniqueSemesterID);
+    activeCourseIDs.push([]);
+    printInfo();
+    for(var i = 0; i < 4; i++)
+    { newCourse(uniqueSemesterID); }
+    uniqueSemesterID++;
+}
+
+function newCourse(semID) {
+    $(".classList-"+semID+" > tbody:last-child").append(printNewCourseToScreen(semID));
+    activeCourseIDs[semID].push(uniqueCourseID); //push the start of the array for this semester
+    printInfo();
+    uniqueCourseID++;
+}
+
+function deleteSemester(id) {
+    $("div[name=semester-"+id+"]").remove();;
+    removeA(activeSemesterIDs, parseFloat(id));
+    activeCourseIDs[id]=[-1];
+    if(activeSemesterIDs.length < 1) {
+        newSemester();
+    }
+    printInfo();
+}
+
+function deleteCourse(semID,cID) {
+    if(activeCourseIDs[semID].length <= 1) {
+        deleteSemester(semID);
+    } else {
+    $("tr[name=course-"+semID+"-"+cID+"]").remove();
+    removeA(activeCourseIDs[semID], parseFloat(cID));
+    printInfo()
+    }
+}
 
 function printNewSemesterToScreen() {
-    numberSemesters++;
-    arrayOfCourseNumbers.push(1);
-    var num = numberSemesters;
-    return '<div class="semester" name="semester-' + num + '">' + 
+    return '<div class="semester" name="semester-' + uniqueSemesterID + '">' + 
         '<div class="semesterName">Semester Name' +
-            '<input type="text" name="semesterName-' + num + '">' +
-            '<button type="submit" class="deleteSemester" name="'+ num +'">Delete</button>' +
+            '<input type="text" name="semesterName-' + uniqueSemesterID + '">' +
+            '<button type="submit" class="deleteSemester" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
-      '<table class="classList-'+ num +'">' +
+      '<table class="classList-'+ uniqueSemesterID +'">' +
         '<!--Heading for the course list table for this semester-->' +
         '<tr>'+
             '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit #</th><th>GPA</th><th>Delete</th>'+
         '</tr>' +
         '<!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->' +
-        '<tr name="course-'+ num +'-1">'+
-            '<td><input type="checkbox" name="major-'+ num +'-1" value="major"></td>' +
-            '<td><input type="text" name="courseName-'+ num +'-1"></td>' +
-            '<td><input type="text" name="courseGrade-'+ num +'-1"></td>' +
-            '<td><input type="text" name="creditNumber-'+ num +'-1"></td>' +
-            '<td><div name="GPAOutput-'+ num +'-1">-.--</div></td>' +
-            '<td><button type="submit" class="deleteCourse" semester="'+ num +'" course="1">Delete</button></td>' +
-            '</tr>' +
         '<!--Here is where other courses would get added -->' +
       '</table>' +
       '<div class="overallDisplay">' +
         '<!--output divs for major and normal gpa for this semester-->' +
-        '<div class="leftGPA" name="GPA-' + num + '">gpa: </div>' + 
-        '<div class="rightGPA" name="majorGPA-' + num + '">major gpa: </div>' +
+        '<div class="leftGPA" name="GPA-' + uniqueSemesterID + '">gpa: </div>' + 
+        '<div class="rightGPA" name="majorGPA-' + uniqueSemesterID + '">major gpa: </div>' +
         '<!--button to add course to this semester-->' +
-        '<button class="button addCourse" name="' + num + '">Add course</button>' +
+        '<button class="button addCourse" name="' + uniqueSemesterID + '">Add course</button>' +
       '</div>' +
     '</div>' +
   '</div>';
 }
 
-function printNewCourseToScreen(semesterNum) {
-    arrayOfCourseNumbers[semesterNum-1]++;
-    var num = arrayOfCourseNumbers[semesterNum-1];
-    return'<tr name="course-'+ semesterNum +'-'+ num +'">'+
-      '<td><input type="checkbox" name="major-' + semesterNum + '-' + num + '" value="major"></td>' +
-      '<td><input type="text" name="courseName-' + semesterNum + '-' + num + '"></td>' + 
-      '<td><input type="text" name="courseGrade-' + semesterNum + '-' + num + '"></td>' +
-      '<td><input type="text" name="creditNumber-' + semesterNum + '-' + num + '"></td>' +
-      '<td><div name="GPAOutput-' + semesterNum + '-' + num + '">-.--</div></td>' +
-      '<td><button type="submit" class="deleteCourse" semester="'+ semesterNum +'" course="' + num + '">Delete</button></td>' +
+function printNewCourseToScreen(semesterID) {
+    return newDiv = '<tr name="course-'+ semesterID +'-'+ uniqueCourseID +'">'+
+      '<td><input type="checkbox" name="major-' + semesterID + '-' + uniqueCourseID + '" value="major"></td>' +
+      '<td><input type="text" name="courseName-' + semesterID + '-' + uniqueCourseID + '"></td>' + 
+      '<td><input type="text" name="courseGrade-' + semesterID + '-' + uniqueCourseID + '"></td>' +
+      '<td><input type="text" name="creditNumber-' + semesterID + '-' + uniqueCourseID + '"></td>' +
+      '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">-.--</div></td>' +
+      '<td><button type="submit" class="deleteCourse" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
     '</tr>';
 }
 
@@ -61,14 +114,19 @@ function updateScreen() {
     var runningOMCN = 0; // overall major credit num
     var runningOMGPA = 0; // overall major gpa
 
-    for(var s = 1; s <= numberSemesters; s++) {
+    for(var s = 0; s < uniqueSemesterID; s++) {
+        var sem = activeSemesterIDs[s];
         runningCN = 0;
         runningGPA = 0;
         runningMCN = 0;
         runningMGPA = 0;
-        for( var c = 1; c <= arrayOfCourseNumbers[s-1]; c++) {   
-            var grade = $('input[name=courseGrade-'+s+'-'+c+']').val();
-            var gpa = "0"
+        if(activeCourseIDs[sem] != -1)
+        {
+        for( var c = 0; c < activeCourseIDs[sem].length; c++) {
+            var cor = activeCourseIDs[sem][c];
+            var grade = $('input[name=courseGrade-'+sem+'-'+cor+']').val();
+            grade = grade.toUpperCase();
+            var gpa = "0.00"
             if(grade == 'A') {
                 gpa = "4.00"
             } else if(grade == 'A-') {
@@ -93,11 +151,11 @@ function updateScreen() {
                 gpa = "0.00"
             } else {
             }
-            $('div[name=GPAOutput-'+s+'-'+c+']').html(gpa)
+            $('div[name=GPAOutput-'+sem+'-'+cor+']').html(gpa)
 
-            var creditNumber = parseFloat($('input[name=creditNumber-'+s+'-'+c+']').val())
+            var creditNumber = parseFloat($('input[name=creditNumber-'+sem+'-'+cor+']').val())
 
-            if($('input[name=major-'+s+'-'+c+']').is(':checked')) {
+            if($('input[name=major-'+sem+'-'+cor+']').is(':checked')) {
                 console.log("test")
                 runningMGPA = runningMGPA + (creditNumber*gpa)
                 runningMCN = runningMCN + creditNumber;
@@ -106,60 +164,61 @@ function updateScreen() {
             runningCN = runningCN + creditNumber;
 
         }
-        var finalGPA = runningGPA/runningCN
-        var finalMajGPA = runningMGPA/runningMCN
-        $('div[name=GPA-'+s+']').html("GPA: " + finalGPA)
-        $('div[name=majorGPA-'+s+']').html("Major GPA: " + finalMajGPA)
-
-
+        var finalGPA = (runningGPA/runningCN).toFixed(2);
+        var finalMGPA = (runningMGPA/runningMCN).toFixed(2);
+        if(isNaN(finalGPA)) {
+            finalGPA = "N/a"
+        }
+        if(isNaN(finalGPA)) {
+            finalGPA = "N/a"
+        }
+        $('div[name=GPA-'+sem+']').html("GPA: " + finalGPA)
+        $('div[name=majorGPA-'+sem+']').html("Major GPA: " + finalMGPA)
         runningOCN = runningOCN + runningCN; // overall credit num
         runningOGPA = runningOGPA + runningGPA; // overall gpa
         runningOMCN = runningOMCN + runningMCN; // overall major credit num
         runningOMGPA = runningOMGPA + runningMGPA; // overall major gpa
     }
-    var finalOGPA = runningOGPA/runningOCN
-    var finalMajOGPA = runningOMGPA/runningOMCN
+    }
+    var finalOGPA = (runningOGPA/runningOCN).toFixed(2);
+    var finalMOGPA = (runningOMGPA/runningOMCN).toFixed(2);
+    if(isNaN(finalOGPA)) {
+        finalOGPA = "N/a"
+    }
+
+    if(isNaN(finalMOGPA)) {
+        finalMOGPA = "N/a"
+    }
+
     $('div[name=GPA]').html("Overall GPA: " + finalOGPA)
-    $('div[name=majorGPA]').html("Overall Major GPA: " + finalMajOGPA)
+    $('div[name=majorGPA]').html("Overall Major GPA: " + finalMOGPA)
 }
 
 $(document).ready(function () {
-
+    newSemester();
   });
   
 
   $('button[name=addSemester]').on('click',function() { //add new semester
-    $(".semesterList").prepend(printNewSemesterToScreen());
-    console.log(arrayOfCourseNumbers);
+    newSemester();
   });
 
-  $('.semesterList').on('click','.addCourse',function() {
-    sem = $(this).attr('name')
-    $(".classList-"+sem+" > tbody:last-child").append(printNewCourseToScreen(sem));
-    console.log(sem);
-    console.log(arrayOfCourseNumbers);
+  $('.semesterList').on('click','.addCourse',function() {  
+    newCourse($(this).attr('name'));
   });
 
   $('.semesterList').on('click','.deleteSemester',function() {
-    sem = $(this).attr('name')
-    console.log(sem);
-    $("div[name=semester-"+sem+"]").remove();
-    numberSemesters--;
-    arrayOfCourseNumbers.splice(sem-1, 1);
-    console.log(arrayOfCourseNumbers);
+    deleteSemester($(this).attr('name'));
+    updateScreen();
   });
 
   $('.semesterList').on('click','.deleteCourse',function() {
-    var s =  $(this).attr('semester')
-    var c =  $(this).attr('course')
-    $("tr[name=course-"+s+"-"+c+"]").remove();
-    arrayOfCourseNumbers[s-1]--;
-    console.log(arrayOfCourseNumbers);
+    deleteCourse($(this).attr('semester'),$(this).attr('course'));
+    updateScreen();
   });
 
   $('.semesterList').on('blur','input',function() {
     updateScreen();
-
 });
 
 

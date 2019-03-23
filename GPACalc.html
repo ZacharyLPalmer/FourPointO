@@ -34,12 +34,13 @@
   </li>
 </ul>
 
+<body>
+
 <!--logo div-->
 <div class="logo">
   <img src="media/logo.png" alt="logo">
 </div>
-
-
+<div class="container">
 <div class="overallDisplay">
   <!--displays your overall gpa/major gpa -->
   <div class="leftGPA" name="GPA">overall gpa: </div>
@@ -49,50 +50,13 @@
 </div>
 
 <div class="semesterList">
-
-  <!--This will be a div that gets duplicated and 
+<!---This will be a div that gets duplicated and 
   removed as semesters get added or removed dynamically
   -->
-  <div class="semester" name="semester-1">
-    <div class="semesterName">Semester Name
-      <input type="text" name="semesterName-1">
-      <button type="submit" class="deleteSemester" name="1">Delete</button>
-    </div>
-    <div>
-      <table class="classList-1">
 
-        <!--Heading for the course list table for this semester-->
-        <tr>
-          <th>Major?</th>
-          <th>Course Name</th>
-          <th>Grade</th>
-          <th>Credit #</th>
-          <th>GPA</th>
-          <th>Delete</th>
-        </tr>
-
-        <!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->
-        <tr name="course-1-1">
-          <td><input type="checkbox" name="major-1-1" value="major"></td>
-          <td><input type="text" name="courseName-1-1"></td>
-          <td><input type="text" name="courseGrade-1-1"></td>
-          <td><input type="text" name="creditNumber-1-1"></td>
-          <td><div name="GPAOutput-1-1">-.--</div></td>
-          <td><button type="submit" class="deleteCourse" semester="1" course="1">Delete</button></td>
-        </tr>
-
-        <!--Here is where other courses would get added -->
-      </table>
-
-      <div class="overallDisplay">
-        <!--output divs for major and normal gpa for this semester-->
-        <div class="leftGPA" name="GPA-1">gpa: </div>
-        <div class="rightGPA" name="majorGPA-1">major gpa: </div>
-        <!--button to add course to this semester-->
-        <button class="button addCourse" name="1">Add course</button>
-      </div>
-    </div>
-  </div>
+  
 </div>
+</div>
+</body>
 <script src="js/GPACalc.js"></script>
 </html>
