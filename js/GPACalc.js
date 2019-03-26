@@ -111,7 +111,6 @@ function saveToJson() {
     outputJSON += "\"MajorGPA\":\"" + majorGPA + "\" ,"; 
     outputJSON += "\"semesters\":[";
 
-
     for(var s = 0; s < activeSemesterIDs.length; s++) {
         var sem = activeSemesterIDs[s];
         var semesterName = $('input[name=semesterName-'+sem+']').val();

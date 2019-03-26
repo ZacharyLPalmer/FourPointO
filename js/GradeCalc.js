@@ -73,15 +73,96 @@ function deleteCategory() {
             grade += ( currWeight * currAvg );
         }
     }
+    if(totalWeight == 100) {
+        $('div[name=currentGrade]').html(grade/totalWeight*100+'%');
+    } else {
+        $('div[name=currentGrade]').html(grade+'/'+totalWeight);
+    }
 
-    $('.currentGrade').html("Current Grade " + grade + "/" + totalWeight);
  }
+
+/*
+  json object
+  {
+      grade
+      name
+      creditNumber
+      major
+      catagories[
+            name    
+            weight
+            average
+      ]
+  }
+
+*/
+
 
  /**
   * TODO: Save the data by sending it to some server
   */
  function saveCourse() {
+    var grade = $('div[name=currentGrade]').text();
+    var name = $('input[name=courseName]').val();
+    var creditNumber = $('input[name=creditNumber]').val();
+    var majorCourse = false;
+    
+    if(creditNumber == "") {
+        //print "no creditNumber" error
+        return;
+    }
+    if(name == "") {
+        //print "no name" error
+        return;
+    }
+    if($('input[name=major]').is(':checked')) {
+        majorCourse = true;
+    }
+
+    var outputJSON = "{\"Name\":\"" + name + "\" ,"; 
+    outputJSON += "\"Grade\":\"" + grade + "\" ,"; 
+    outputJSON += "\"MajorCourse\":\"" + majorCourse + "\" ,"; 
+    outputJSON += "\"CreditNumber\":\"" + creditNumber + "\" ,"; 
+    outputJSON += "\"cats\":[";
+    var courses = document.getElementById("catList").rows;
+
+    for( var i = 1; i < courses.length; i++ ) {
+        var courseName = courses[i].cells[0].children[0].value
+        if(courseName == "") {
+            //print "no creditNumber" error
+           courseName = "course"+i;
+        }
+        weight = parseFloat( courses[i].cells[1].children[0].value );
+        average = parseFloat( courses[i].cells[2].children[0].value );
+        if(weight && average) {
+            outputJSON += "{ \"Name\":\"" + courseName + "\" ,"; 
+            outputJSON += "\"Weight\":\"" + weight + "\" ,"; 
+            outputJSON += "\"Average\":\"" + average + "\" },"; 
+        }
+    }
+    outputJSON += "]}"
+    console.log(outputJSON);
  }
+
+function loadJson(data) {
+    console.log(data);
+    $('input[name=courseName]').val(data.Name);
+    $('input[name=creditNumber]').val(data.creditNumber);
+    if(data.majorCourse == 'true') {
+        $('input[name=major]').attr('checked',true);
+    } else {
+        $('input[name=major]').attr('checked',false);
+    }
+    $("#catList").find("tr:gt(0)").remove();
+    catCount = 0;
+    for(var i = 0; i < data.cats.length; i++) {
+        addCategory(addCategory);
+        $('input[name=catName-'+i+']').val(data.cats[i].Name);
+        $('input[name=catWeight-'+i+']').val(data.cats[i].Weight);
+        $('input[name=catAvg-'+i+']').val(data.cats[i].Average);
+    }
+    updateGrade();
+}
 
 /**
  * Sets up event listeners when document is fully loaded
@@ -100,20 +181,16 @@ $(document).ready(function () {
         addCategory();
         addCategory();
         addCategory();
-  });
+    });
 
-/*
-  json object
-  {
-      grade
-      name
-      creditNumber
-      major
-      catagories[
-            name    
-            weight
-            average
-      ]
-  }
+    $('button[name=loadTest1]').on('click',function() {
+        var nonMajorClassData = {"Name":"Physics" ,"Grade":"86.75%" ,"majorCourse":"false" ,"creditNumber":"4" ,"cats":[{ "Name":"Tests" ,"Weight":"40" ,"Average":"79" },{ "Name":"Quizzes" ,"Weight":"25" ,"Average":"91" },{ "Name":"Participation" ,"Weight":"15" ,"Average":"100" },]};
+        loadJson(nonMajorClassData);
+    });
 
-*/
+    $('button[name=loadTest2]').on('click',function() {
+        var majorClassData = {"Name":"Computing 1" ,"Grade":"89.85%" ,"majorCourse":"true" ,"creditNumber":"3" ,"cats":[{ "Name":"Tests" ,"Weight":"30" ,"Average":"84" },{ "Name":"Quizzes" ,"Weight":"15" ,"Average":"87" },{ "Name":"Participation" ,"Weight":"10" ,"Average":"100" },{ "Name":"Assignments" ,"Weight":"35" ,"Average":"98" },]};
+        loadJson(majorClassData);
+    });
+    
+
