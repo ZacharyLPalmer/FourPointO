@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</head>
+
+<!--Top nav bar-->
+<ul class="nav">
+  <li>
+    <form method="post" action="GPACalc.html">
+      <button class="active" type="submit">GPA Calculation</button>
+    </form>
+  </li>
+  <li>
+    <form method="post" action="GradeCalc.html">
+      <button type="submit">Grade Calculation</button>
+    </form>
+  </li>
+  <li>
+    <form method="post" action="GradeDistri.html">
+      <button type="submit">Grade Distribution</button>
+    </form>
+  </li>
+  <li>
+    <form method="post" action="MyGrades.html">
+      <button type="submit">My Grades</button>
+    </form>
+  </li>
+</ul>
+
+<body>
+
+<!--logo div-->
+<div class="logo">
+  <img src="media/logo.png" alt="logo">
+</div>
+<div class="container">
+<div class="overallDisplay">
+  <!--displays your overall gpa/major gpa -->
+  <div class="leftGPA" name="wrapGPA">Overall GPA: <div name="GPA">N/a</div></div>
+  <div class="rightGPA" name="wrapmajorGPA">Overall Major GPA: <div name="majorGPA">N/a</div></div>
+  <!--displays your overall gpa/major gpa -->
+  <button class="button" name="addSemester">Add Semester</button>
+  <button class="button" name="saveData">Save Data</button>
+  <button name="loadTest">LOAD TEST DATA [DEBUG ONLY]</button>
+</div>
+
+<div class="semesterList">
+<!---This will be a div that gets duplicated and 
+  removed as semesters get added or removed dynamically
+  -->
+
+  
+</div>
+</div>
+</body>
+<script src="js/GPACalc.js"></script>
+</html>
