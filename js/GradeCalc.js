@@ -1,6 +1,6 @@
 
 // Global(s)
-var catCount = 1; // Used to differentiate categories 
+var catCount = 0; // Used to differentiate categories 
 
 /**
  * Adds a new course row to the categoryList table
@@ -35,6 +35,13 @@ function deleteCategory() {
     updateGrade();
 
     console.log("Deleted category-" + catNum);
+
+    var courses = document.getElementById("catList").rows;
+    console.log(courses.length);
+    if(courses.length <= 1) {
+        addCategory();
+        console.log("Last catagory deleted so it is replaced");
+    }
 }
 
  /**
@@ -56,12 +63,15 @@ function deleteCategory() {
         currWeight = parseFloat( courses[i].cells[1].children[0].value );
         currAvg = parseFloat( courses[i].cells[2].children[0].value );
 
-        totalWeight += currWeight;
+        if(!isNaN(currWeight) && !isNaN(currAvg))
+        {
+            totalWeight += currWeight;
 
-        // Assuming weight is a percentage
-        currWeight = ( currWeight / 100 );
+            // Assuming weight is a percentage
+            currWeight = ( currWeight / 100 );
 
-        grade += ( currWeight * currAvg );
+            grade += ( currWeight * currAvg );
+        }
     }
 
     $('.currentGrade').html("Current Grade " + grade + "/" + totalWeight);
@@ -71,7 +81,6 @@ function deleteCategory() {
   * TODO: Save the data by sending it to some server
   */
  function saveCourse() {
-    
  }
 
 /**
@@ -85,3 +94,26 @@ $(function() {
     $('.categoryList').on("change", ['.weight', '.avg'], updateGrade);
 
 });
+
+$(document).ready(function () {
+        addCategory();
+        addCategory();
+        addCategory();
+        addCategory();
+  });
+
+/*
+  json object
+  {
+      grade
+      name
+      creditNumber
+      major
+      catagories[
+            name    
+            weight
+            average
+      ]
+  }
+
+*/
