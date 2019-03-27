@@ -133,7 +133,7 @@ function printNewClasses(num) {
         '<td><a name="major-'+i+'"></a></td>'+
         '<td><a name="credit-'+i+'"></a></td>'+
         '<td><a name="grade-'+i+'"></a></td>'+
-        '<td><form method="post" action="GradeCalc.html?course='+i+'"><button class="deletebtn" name="editCourse-'+i+'">Edit</button></form></td>'+
+        '<td><button onclick="location.href=\'GradeCalc.html?course='+i+'\';" class="deletebtn" name="editCourse-'+i+'">Edit</button></td>'+
         '</tr>'
         $(".classes").append(newTR);
     }

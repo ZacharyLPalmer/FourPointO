@@ -12,7 +12,7 @@ function addCategory() {
         "<td><input type=\"text\" name=\"catName-" + catCount + "\"></td>" +
         "<td><input type=\"text\" class=\"weight\" name=\"catWeight-" + catCount + "\"></td>" +
         "<td><input type=\"text\" class=\"avg\" name=\"catAvg-" + catCount + "\"></td>" +
-        "<td><button class=\"deletebtn\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
+        "<td><button class=\"deletebtn deleteCat\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
     "</tr>";
 
     $(".categoryList").append( emptyCategroy );
@@ -198,26 +198,3 @@ $(document).ready(function () {
         addCategory();
     }
     });
-
-    $('button[name=loadTest1]').on('click',function() {
-        var nonMajorClassData = {"Name":"Intro to Psych" ,"Grade":"87.95%" ,"MajorCourse":"false" ,"CreditNumber":"3" ,"cats":[
-            { "Name":"Test" ,"Weight":"30" ,"Average":"78" },
-            { "Name":"Quizzes" ,"Weight":"25" ,"Average":"86" },
-            { "Name":"Homework" ,"Weight":"15" ,"Average":"98" },
-            { "Name":"Research Paper" ,"Weight":"15" ,"Average":"89" },
-            { "Name":"Attendence" ,"Weight":"15" ,"Average":"100" },]
-        };  
-        loadJson(nonMajorClassData);
-    });
-
-    $('button[name=loadTest2]').on('click',function() {
-        var majorClassData = {"Name":"Computing 4" ,"Grade":"93.40%" ,"MajorCourse":"true" ,"CreditNumber":"4" ,"cats":[
-            { "Name":"Assignments" ,"Weight":"65" ,"Average":"96" },
-            { "Name":"Exams" ,"Weight":"20" ,"Average":"83" },
-            { "Name":"Quizzes" ,"Weight":"7.5" ,"Average":"92" },
-            { "Name":"Attendence" ,"Weight":"7.5" ,"Average":"100" },]
-        };
-        loadJson(majorClassData);
-    });
-    
-

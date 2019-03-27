@@ -13,26 +13,18 @@
     <div class="applicationWrapper">
 <!--Top nav bar-->
 <ul class="nav">
-    <li>
-      <form method="post" action="GPACalc.html">
-        <button type="submit">GPA Calculation</button>
-      </form>
-    </li>
-    <li>
-      <form method="post" action="GradeCalc.html">
-        <button type="submit">Grade Calculation</button>
-      </form>
-    </li>
-    <li>
-      <form method="post" action="GradeDistri.html">
-        <button type="submit">Grade Distribution</button>
-      </form>
-    </li>
-    <li>
-      <form method="post" action="MyGrades.html">
-        <button class="active" type="submit">My Grades</button>
-      </form>
-    </li>
+  <li>
+    <button onclick="location.href='GPACalc.html';">GPA Calculation</button>
+  </li>
+  <li>
+    <button onclick="location.href='GradeCalc.html';">Grade Calculation</button>
+  </li>
+  <li>
+    <button onclick="location.href='GradeDistri.html';">Grade Distribution</button>
+  </li>
+  <li>
+    <button class="active" onclick="location.href='MyGrades.html';">My Grades</button>
+  </li>
   </ul>
   
   <!--logo div-->
@@ -82,9 +74,7 @@
           </div>
       </table>
     </div>
-    <form method="post" action="GradeCalc.html">
-      <button class="button" name="addCourse">Add Course</button>
-    </form>
+      <button onclick="location.href='GradeCalc.html';" class="button" name="addCourse">Add Course</button>
     </div>
   </div>
     <!-- Javascript and Jquery sources -->

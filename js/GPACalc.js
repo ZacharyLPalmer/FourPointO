@@ -52,7 +52,7 @@ function deleteSemester(id) {
     removeA(activeSemesterIDs, parseFloat(id));
     activeCourseIDs[id]=[];
     if(activeSemesterIDs.length < 1) {
-        newSemester();
+        newSemester(4);
     }
     printInfo();
 }
@@ -71,7 +71,7 @@ function printNewSemesterToScreen() {
     return '<div class="semester" name="semester-' + uniqueSemesterID + '">' + 
         '<div class="semesterName">Semester Name: ' +
             '<input type="text" name="semesterName-' + uniqueSemesterID + '">' +
-            '<button type="submit" class="deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
+            '<button type="submit" class="deleteSemester deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
       '<table class="classList-'+ uniqueSemesterID +'">' +
@@ -100,7 +100,7 @@ function printNewCourseToScreen(semesterID) {
       '<td><input type="text" name="courseGrade-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><input type="text" name="creditNumber-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">N/a</div></td>' +
-      '<td><button  class="deletebtn" type="submit" class="deleteCourse" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
+      '<td><button  class="deletebtn deleteCourse" type="submit" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
     '</tr>';
 }
 
@@ -317,6 +317,7 @@ $('.semesterList').on('click','.deleteCourse',function() {
 });
 
 $('button[name=saveData]').on('click',function() {
+    console.log("test");
     saveToJson();
 });
 
