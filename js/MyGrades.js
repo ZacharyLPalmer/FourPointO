@@ -1,3 +1,4 @@
+var userData;
 var testUserData = 
 {
 "UserID":"123",
@@ -104,7 +105,7 @@ function loadClassData(data) {
 }
 
 function loadUserJson() {
-    var data = testUserData;
+    var data = userData;
     /*
     This will be where we load in the JSON's from the specific user
     */
@@ -126,12 +127,13 @@ function printNewSemsesters(num) {
 
 function printNewClasses(num) {
     for(var i = 0; i < num; i++) {
+        var data = JSON.stringify(testUserData.classData.currentCourses[i]);
         newTR = '<tr>'+
         '<td><a name="className-'+i+'"></a></td>'+
         '<td><a name="major-'+i+'"></a></td>'+
         '<td><a name="credit-'+i+'"></a></td>'+
         '<td><a name="grade-'+i+'"></a></td>'+
-        '<td><button name="editCourse-'+i+'">Edit</button></td>'+
+        '<td><form method="post" action="GradeCalc.html?course='+i+'"><button name="editCourse-'+i+'">Edit</button></form></td>'+
         '</tr>'
         $(".classes").append(newTR);
     }
@@ -167,7 +169,14 @@ function percentToGPA(percent) {
 }
 
 $(document).ready(function () {
-    loadUserJson()
+    userData = JSON.parse(sessionStorage.getItem('json'));
+    console.log(userData);
+    if(userData == null) {
+        console.log("wut");
+        userData = testUserData;
+        sessionStorage.setItem('json', JSON.stringify(userData));
+    }
+    loadUserJson();
 });
 
 

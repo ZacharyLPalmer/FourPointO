@@ -1,6 +1,6 @@
 
 
-
+var userData;
 
 //total number of all the courses and semester made even including the deleted ones
 var uniqueSemesterID = 0;
@@ -105,28 +105,35 @@ function printNewCourseToScreen(semesterID) {
 }
 
 function saveToJson() {
+    var outJ =
+        {"GPA":"" ,"MajorGPA":"" ,"semesters":[]};
     var GPA = $('div[name=GPA]').text();
     var majorGPA = $('div[name=majorGPA]').text();
-    var outputJSON = "{\"GPA\":\"" + GPA + "\" ,"; 
-    outputJSON += "\"MajorGPA\":\"" + majorGPA + "\" ,"; 
-    outputJSON += "\"semesters\":[";
+
+    outJ.GPA = GPA; 
+    outJ.MajorGPA = majorGPA; 
 
     for(var s = 0; s < activeSemesterIDs.length; s++) {
+        outJ.semesters.push(            
+            { "name":"" ,"GPA":"" ,"MajorGPA":"" ,"courses":[]
+        })
+
         var sem = activeSemesterIDs[s];
         var semesterName = $('input[name=semesterName-'+sem+']').val();
-        outputJSON += "{ \"name\":\""
         if(semesterName != ""){
-            outputJSON += semesterName;
+            outJ.semesters[s].name = semesterName;
         } else {
-            outputJSON += "semester-" + (s+1); 
+            outJ.semesters[s].name = "semester-" + (s+1); 
         }
         GPA = $('div[name=GPA-'+sem+']').text();
         majorGPA = $('div[name=majorGPA-'+sem+']').text();
 
-        outputJSON += "\" ,\"GPA\":\"" + GPA + "\" ,"; 
-        outputJSON += "\"MajorGPA\":\"" + majorGPA + "\" ,"; 
-        outputJSON += "\"courses\":["; 
+        outJ.semesters[s].GPA = GPA; 
+        outJ.semesters[s].MajorGPA =majorGPA; 
         for( var c = 0; c < activeCourseIDs[sem].length; c++) {
+            outJ.semesters[s].courses.push(
+                { "name":"" ,"major":"" ,"credits":"" ,"grade":"" ,"GPA":""}
+            )
             var cor = activeCourseIDs[sem][c];
             //get value of major course checkbox
             var majorCourse = false;
@@ -142,22 +149,22 @@ function saveToJson() {
             //getValue of GPA
             var GPA = $('div[name=GPAOutput-'+sem+'-'+cor+']').text();
             if(GPA != "N/a") {
-            outputJSON += "{ \"name\":\"";
                 if(courseName != ""){
-                    outputJSON += courseName;
+                    outJ.semesters[s].courses[c].name = courseName;
                 } else {
-                    outputJSON += "course-" + (c+1); 
+                    outJ.semesters[s].courses[c].name = "course-" + (c+1); 
                 }
-                outputJSON += "\" ,\"major\":\"" + majorCourse + "\" ,"; 
-                outputJSON += "\"credits\":\"" + creditNumber + "\" ,"; 
-                outputJSON += "\"grade\":\"" + courseGrade + "\" ,"; 
-                outputJSON += "\"GPA\":\"" + GPA + "\"} ,"; 
+                outJ.semesters[s].courses[c].major = majorCourse
+                outJ.semesters[s].courses[c].credits = creditNumber
+                outJ.semesters[s].courses[c].grade = courseGrade
+                outJ.semesters[s].courses[c].GPA = GPA
             }
         }
-        outputJSON += "]} ,"; 
-        }
-    outputJSON += "]}"; 
-    console.log(outputJSON);
+    }
+    console.log(outJ);
+    userData.semesterData = outJ;
+    sessionStorage.setItem('json', JSON.stringify(userData));
+    
 }
 
 function updateScreen() {
@@ -249,17 +256,14 @@ function updateScreen() {
     $('div[name=majorGPA]').html(finalMOGPA)
 };
 
-function loadJson() {
+function loadJson(data) {
     uniqueSemesterID = 0;
     uniqueCourseID = 0;
     activeSemesterIDs = [];
     activeCourseIDs = [[]];
 
     $('div[class=semesterList]').html("");
-
-
-    var data = {"GPA":"3.08" ,"MajorGPA":"3.10" ,"semesters":[{ "name":"Freshmen 1" ,"GPA":"3.23" ,"MajorGPA":"3.04" ,"courses":[{ "name":"Physics" ,"major":"false" ,"credits":"3" ,"grade":"A-" ,"GPA":"3.70"},{ "name":"Physics Lab " ,"major":"false" ,"credits":"1" ,"grade":"C+" ,"GPA":"2.30"},{ "name":"Computing 1" ,"major":"true" ,"credits":"4" ,"grade":"B+" ,"GPA":"3.30"},{ "name":"Circuits 1" ,"major":"true" ,"credits":"3" ,"grade":"B-" ,"GPA":"2.70"},{ "name":"Freshmen Seminar" ,"major":"false" ,"credits":"1" ,"grade":"A" ,"GPA":"4.00"}]},{ "name":"Freshmen 2" ,"GPA":"2.68" ,"MajorGPA":"2.85" ,"courses":[{ "name":"Chemistry" ,"major":"false" ,"credits":"3" ,"grade":"B-" ,"GPA":"2.70"},{ "name":"Chemistry Lab" ,"major":"false" ,"credits":"1" ,"grade":"D+" ,"GPA":"1.3"},{ "name":"Computing 2" ,"major":"true" ,"credits":"4" ,"grade":"A" ,"GPA":"4.00"},{ "name":"Assembly" ,"major":"true" ,"credits":"4" ,"grade":"C-" ,"GPA":"1.70"}]},{ "name":"Sophmore 1" ,"GPA":"3.39" ,"MajorGPA":"3.43" ,"courses":[{ "name":"Comp Architecture" ,"major":"true" ,"credits":"3" ,"grade":"A" ,"GPA":"4.00"},{ "name":"Computing 3" ,"major":"true" ,"credits":"4" ,"grade":"B" ,"GPA":"3.00"},{ "name":"Intro to Psych" ,"major":"false" ,"credits":"3" ,"grade":"B+" ,"GPA":"3.30"}]}]};
-    var tUCID = 0
+      var tUCID = 0
     for(var s = 0; s < data.semesters.length; s++) {
 
         newSemester(data.semesters[s].courses.length);
@@ -281,7 +285,14 @@ function loadJson() {
 }
 
 $(document).ready(function () {
+    userData = JSON.parse(sessionStorage.getItem('json'));
+    console.log(userData);
+    if(userData != null)
+    {
+        loadJson(userData.semesterData)
+    } else {
     newSemester(4);
+    }
 });
 
 

@@ -22,6 +22,14 @@ function addCategory() {
     catCount++;
 }
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
 /**
  * Removes the row containing the clicked 'delete' button
  * Updates the course grade to reflect this change
@@ -177,10 +185,18 @@ $(function() {
 });
 
 $(document).ready(function () {
+    var cnum = getUrlVars()["course"];
+    userData = JSON.parse(sessionStorage.getItem('json'));
+    course = userData.classData.currentCourses[cnum]
+    if(course != null)
+    {
+        loadJson(course)
+    } else {
         addCategory();
         addCategory();
         addCategory();
         addCategory();
+    }
     });
 
     $('button[name=loadTest1]').on('click',function() {
