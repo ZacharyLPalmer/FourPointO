@@ -2,8 +2,9 @@
   margin: 25px;
   height: 75px;
   width: 820px;
-  display:inline-block;
-  text-align:center;
+  margin: auto;
+  background: white;
+  padding: 10px;
 }
 
 .nav li{
@@ -15,10 +16,12 @@
   height: 75px;
   width: 200px;
   font-size: 22px;
-  border: 10px;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-  display:inline-block;
   background-color: slategrey;
+}
+body {
+  background: #555;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
 .classGrade{
@@ -34,17 +37,29 @@
 }
 
 .button {
+  background-color: rgb(97, 97, 97);
   border: 10px;
-  width: 200px;
+  width: 135px;
   height: 40px;
   margin: 10px;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   display:inline-block;
+  color:white;
 }
 
-  body {
-    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-    text-align: center;
+.currentGrade{
+  background-color: lightgray;
+  width: 200px;
+  height: 50px;
+  margin: 50px;
+}
+
+  .applicationWrapper {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 10px;
+      min-height: 750px;
   }
 
   .container {
@@ -53,6 +68,16 @@
     display:inline-block;
   }
 
+  .deletebtn {
+    background-color: rgb(97, 97, 97);
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+  }
 
 
   .overallDisplay {
@@ -69,7 +94,7 @@
   .leftGPA {
     background-color: lightgray;
     width: 200px;
-    height: 40px;
+    height: 50px;
     margin: 10px;
     float: left;
     position: relative;
@@ -80,7 +105,7 @@
     background-color: lightgray;
     text-align: center;
     width: 200px;
-    height: 40px;
+    height: 50px;
     margin: 10px;
     float: right;
   }
@@ -92,9 +117,23 @@
     width: 200px;
     height: 40px;
     margin: 10px;
+    
   }
 
+  .currentGradeWrapper {
+    width: 900px;
+  }
+
+.logo {
+  margin: auto;
+  background: white;
+  padding: 10px;
+  text-align: center;
+}
+
 img {
+  margin: auto;
+  text-align: center;
     width: 600px;
   }
 
@@ -117,12 +156,6 @@ text-align: center;
 display: inline-block;
 }
 
-.Currentgrade {
-  background-color: lightgray;
-  text-align: center;
-  width: 200px;
-  height: 40px;
-}
 
 .course {
   text-align: center;
