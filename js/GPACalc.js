@@ -69,15 +69,15 @@ function deleteCourse(semID,cID) {
 
 function printNewSemesterToScreen() {
     return '<div class="semester" name="semester-' + uniqueSemesterID + '">' + 
-        '<div class="semesterName">Semester Name' +
+        '<div class="semesterName">Semester Name: ' +
             '<input type="text" name="semesterName-' + uniqueSemesterID + '">' +
-            '<button type="submit" class="deleteSemester" name="'+ uniqueSemesterID +'">Delete</button>' +
+            '<button type="submit" class="deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
       '<table class="classList-'+ uniqueSemesterID +'">' +
         '<!--Heading for the course list table for this semester-->' +
         '<tr>'+
-            '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit #</th><th>GPA</th><th>Delete</th>'+
+            '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit #</th><th>GPA</th><th></th>'+
         '</tr>' +
         '<!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->' +
         '<!--Here is where other courses would get added -->' +
@@ -100,7 +100,7 @@ function printNewCourseToScreen(semesterID) {
       '<td><input type="text" name="courseGrade-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><input type="text" name="creditNumber-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">N/a</div></td>' +
-      '<td><button type="submit" class="deleteCourse" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
+      '<td><button  class="deletebtn" type="submit" class="deleteCourse" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
     '</tr>';
 }
 

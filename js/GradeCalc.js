@@ -12,7 +12,7 @@ function addCategory() {
         "<td><input type=\"text\" name=\"catName-" + catCount + "\"></td>" +
         "<td><input type=\"text\" class=\"weight\" name=\"catWeight-" + catCount + "\"></td>" +
         "<td><input type=\"text\" class=\"avg\" name=\"catAvg-" + catCount + "\"></td>" +
-        "<td><button type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
+        "<td><button class=\"deletebtn\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
     "</tr>";
 
     $(".categoryList").append( emptyCategroy );
