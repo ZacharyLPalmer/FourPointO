@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 </head>
 
+<body>
 <!--Top nav bar-->
 <ul class="nav">
     <li>
@@ -36,25 +43,17 @@
 
 <div class="overallDisplay">
   <!--displays your overall gpa/major gpa -->
-  <div class="leftGPA" name="GPA">Overall GPA: </div>
-  <div class="rightGPA" name="majorGPA">Overall Major GPA: </div>
+  <div class="leftGPA" name="wrapGPA">Overall GPA: <div name="GPA">N/a</div></div>
+  <div class="rightGPA" name="wrapmajorGPA">Overall Major GPA: <div name="majorGPA">N/a</div></div>
 </div>
 
 <div class="yourSemesterList">
-<table>
+<table class="semesters">
       <tr>
         <th>Semester</th>
         <th>Major GPA</th>
         <th>Overall GPA</th>
       </tr>
-      <!--This will be a div that gets puplicated and removed as semesters get added or removed-->
-      <div class="class">
-        <tr>
-          <td><a name="semesterName-0">Freshman</a></td>
-          <td><a name="majorGPA-0">2</a></td>
-          <td><a name="overallGPA-0">2</a></td>
-        </tr>
-      </div>
   </table>
 </div>
 
@@ -63,12 +62,12 @@
 
 <div class="overallDisplay">
   <!--displays your overall gpa/major gpa -->
-  <div class="leftGPA" name="semGPA">Estimated Semester GPA: </div>
-  <div class="rightGPA" name="semMajorGPA">Overall Major GPA: </div>
+  <div class="leftGPA">Est. Semester GPA: <div name="semGPA">N/a</div></div>
+  <div class="rightGPA">Est. Major Semester GPA: <div name="semMajorGPA">N/a</div></div>
 </div>
 
 <div class="yourSemesterList">
-    <table>
+    <table class="classes">
           <tr>
             <th>Class Name</th>
             <th>Major Class</th>
@@ -76,18 +75,15 @@
             <th>Grade %</th>
           </tr>
           <!--This will be a div that gets puplicated and removed as classes get added or removed-->
-          <div class="class">
-            <tr>
-              <td><a name="className-0">Freshman</a></td>
-              <td><a name="major-0">2</a></td>
-              <td><a name="credit-0">2</a></td>
-              <td><a name="grade-0">2</a></td>
-              <td><button name="editCourse-0">Edit</button></td>
-            </tr>
+          <div >
+
           </div>
       </table>
     </div>
 
-<button class="button" name="addCourse">addCourse</button>
-
+    <button class="button" name="addCourse">Add Course</button>
+    <!-- Javascript and Jquery sources -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="js/MyGrades.js"></script>
+  </body>
 </html>

@@ -74,7 +74,7 @@ function deleteCategory() {
         }
     }
     if(totalWeight == 100) {
-        $('div[name=currentGrade]').html(grade/totalWeight*100+'%');
+        $('div[name=currentGrade]').html((grade/totalWeight*100).toFixed(2)+'%');
     } else {
         $('div[name=currentGrade]').html(grade+'/'+totalWeight);
     }
@@ -147,8 +147,8 @@ function deleteCategory() {
 function loadJson(data) {
     console.log(data);
     $('input[name=courseName]').val(data.Name);
-    $('input[name=creditNumber]').val(data.creditNumber);
-    if(data.majorCourse == 'true') {
+    $('input[name=creditNumber]').val(data.CreditNumber);
+    if(data.MajorCourse == 'true') {
         $('input[name=major]').attr('checked',true);
     } else {
         $('input[name=major]').attr('checked',false);
@@ -184,12 +184,23 @@ $(document).ready(function () {
     });
 
     $('button[name=loadTest1]').on('click',function() {
-        var nonMajorClassData = {"Name":"Physics" ,"Grade":"86.75%" ,"majorCourse":"false" ,"creditNumber":"4" ,"cats":[{ "Name":"Tests" ,"Weight":"40" ,"Average":"79" },{ "Name":"Quizzes" ,"Weight":"25" ,"Average":"91" },{ "Name":"Participation" ,"Weight":"15" ,"Average":"100" },]};
+        var nonMajorClassData = {"Name":"Intro to Psych" ,"Grade":"87.95%" ,"MajorCourse":"false" ,"CreditNumber":"3" ,"cats":[
+            { "Name":"Test" ,"Weight":"30" ,"Average":"78" },
+            { "Name":"Quizzes" ,"Weight":"25" ,"Average":"86" },
+            { "Name":"Homework" ,"Weight":"15" ,"Average":"98" },
+            { "Name":"Research Paper" ,"Weight":"15" ,"Average":"89" },
+            { "Name":"Attendence" ,"Weight":"15" ,"Average":"100" },]
+        };  
         loadJson(nonMajorClassData);
     });
 
     $('button[name=loadTest2]').on('click',function() {
-        var majorClassData = {"Name":"Computing 1" ,"Grade":"89.85%" ,"majorCourse":"true" ,"creditNumber":"3" ,"cats":[{ "Name":"Tests" ,"Weight":"30" ,"Average":"84" },{ "Name":"Quizzes" ,"Weight":"15" ,"Average":"87" },{ "Name":"Participation" ,"Weight":"10" ,"Average":"100" },{ "Name":"Assignments" ,"Weight":"35" ,"Average":"98" },]};
+        var majorClassData = {"Name":"Computing 4" ,"Grade":"93.40%" ,"MajorCourse":"true" ,"CreditNumber":"4" ,"cats":[
+            { "Name":"Assignments" ,"Weight":"65" ,"Average":"96" },
+            { "Name":"Exams" ,"Weight":"20" ,"Average":"83" },
+            { "Name":"Quizzes" ,"Weight":"7.5" ,"Average":"92" },
+            { "Name":"Attendence" ,"Weight":"7.5" ,"Average":"100" },]
+        };
         loadJson(majorClassData);
     });
     
