@@ -187,14 +187,23 @@ $(function() {
 $(document).ready(function () {
     var cnum = getUrlVars()["course"];
     userData = JSON.parse(sessionStorage.getItem('json'));
-    course = userData.classData.currentCourses[cnum]
-    if(course != null)
+    if(userData != null)
     {
-        loadJson(course)
-    } else {
+        course = userData.classData.currentCourses[cnum]
+        if(course != null)
+        {
+            loadJson(course);
+        } else {
+            addCategory();
+            addCategory();
+            addCategory();
+            addCategory(); 
+        }
+    } else 
+    {
         addCategory();
         addCategory();
         addCategory();
         addCategory();
     }
-    });
+});
