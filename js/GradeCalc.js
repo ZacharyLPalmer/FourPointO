@@ -1,7 +1,7 @@
 
 // Global(s)
 var catCount = 0; // Used to differentiate categories 
-
+var cnum = -1;
 /**
  * Adds a new course row to the categoryList table
  */
@@ -110,6 +110,7 @@ function deleteCategory() {
   * TODO: Save the data by sending it to some server
   */
  function saveCourse() {
+     console.log("test");
     var grade = $('div[name=currentGrade]').text();
     var name = $('input[name=courseName]').val();
     var creditNumber = $('input[name=creditNumber]').val();
@@ -127,29 +128,40 @@ function deleteCategory() {
         majorCourse = true;
     }
 
-    var outputJSON = "{\"Name\":\"" + name + "\" ,"; 
-    outputJSON += "\"Grade\":\"" + grade + "\" ,"; 
-    outputJSON += "\"MajorCourse\":\"" + majorCourse + "\" ,"; 
-    outputJSON += "\"CreditNumber\":\"" + creditNumber + "\" ,"; 
-    outputJSON += "\"cats\":[";
+    var outJ = {"Name":"" ,"Grade":"" ,"MajorCourse":"" ,"CreditNumber":"" ,"cats":[]}; 
+    outJ.Name = name;
+    outJ.Grade = grade;
+    outJ.MajorCourse = majorCourse;
+    outJ.CreditNumber = creditNumber;
+
     var courses = document.getElementById("catList").rows;
 
     for( var i = 1; i < courses.length; i++ ) {
-        var courseName = courses[i].cells[0].children[0].value
-        if(courseName == "") {
-            //print "no creditNumber" error
-           courseName = "course"+i;
+        var catName = courses[i].cells[0].children[0].value
+        if(catName == "") {
+           catName = "cat"+i;
         }
         weight = parseFloat( courses[i].cells[1].children[0].value );
         average = parseFloat( courses[i].cells[2].children[0].value );
         if(weight && average) {
-            outputJSON += "{ \"Name\":\"" + courseName + "\" ,"; 
-            outputJSON += "\"Weight\":\"" + weight + "\" ,"; 
-            outputJSON += "\"Average\":\"" + average + "\" },"; 
+            outJ.cats.push(
+                {"Name": catName ,"Weight": weight ,"Average": average }
+            )
         }
     }
-    outputJSON += "]}"
-    console.log(outputJSON);
+    console.log(userData);
+    if(userData == null) //user not signed in
+    {
+        console.log("new USer course json")
+        sessionStorage.setItem('newUserCourseJson', JSON.stringify(outJ));
+    } else if (cnum == null) { //new course
+        userData.classData.currentCourses.push(outJ);
+        sessionStorage.setItem('json', JSON.stringify(userData));
+    } else { //edit existing course
+        userData.classData.currentCourses[cnum] = outJ;
+        sessionStorage.setItem('json', JSON.stringify(userData));
+    }
+    console.log(cnum);
  }
 
 function loadJson(data) {
@@ -176,16 +188,14 @@ function loadJson(data) {
  * Sets up event listeners when document is fully loaded
  */
 $(function() {
-
     $('button[name=addCat]').on("click", addCategory);
     $('button[name=saveCourse').on("click", saveCourse);
     $('.categoryList').on("click", '.deleteCat', deleteCategory);
     $('.categoryList').on("change", ['.weight', '.avg'], updateGrade);
-
 });
 
 $(document).ready(function () {
-    var cnum = getUrlVars()["course"];
+    cnum = getUrlVars()["course"];
     userData = JSON.parse(sessionStorage.getItem('json'));
     if(userData != null)
     {
@@ -206,4 +216,9 @@ $(document).ready(function () {
         addCategory();
         addCategory();
     }
+});
+
+
+$('button[name=saveCourse]').on('click',function() {
+   window.location.href="MyGrades.html";
 });

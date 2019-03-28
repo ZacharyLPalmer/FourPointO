@@ -161,10 +161,13 @@ function saveToJson() {
             }
         }
     }
-    console.log(outJ);
-    userData.semesterData = outJ;
-    sessionStorage.setItem('json', JSON.stringify(userData));
-    
+    if(userData != null)
+    {
+        userData.semesterData = outJ;
+        sessionStorage.setItem('json', JSON.stringify(userData));
+    } else {
+        sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
+    }
 }
 
 function updateScreen() {
@@ -317,8 +320,8 @@ $('.semesterList').on('click','.deleteCourse',function() {
 });
 
 $('button[name=saveData]').on('click',function() {
-    console.log("test");
     saveToJson();
+    window.location.href="MyGrades.html";
 });
 
 $('button[name=loadTest]').on('click',function() {
