@@ -210,7 +210,7 @@ function updateScreen() {
                 } else if(grade == 'C-') {
                     gpa = "1.70"
                 } else if(grade == 'D+') {
-                    gpa = "1.3"
+                    gpa = "1.30"
                 } else if(grade == 'D') {
                     gpa = "1.00"
                 } else if(grade == 'F') {
