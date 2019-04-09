@@ -7,20 +7,27 @@
   </head>
 
   <body>
-      <div class="applicationWrapper">
     <!--Top nav bar-->
     <ul class="nav">
       <li>
-        <button onclick="location.href='GPACalc.html';">GPA Calculation</button>
+        <form method="post" action="GPACalc.html">
+          <button type="submit">GPA Calculation</button>
+        </form>
       </li>
       <li>
-        <button class="active" onclick="location.href='GradeCalc.html';">Grade Calculation</button>
+        <form method="post" action="GradeCalc.html">
+          <button class="active" type="submit">Grade Calculation</button>
+        </form>
       </li>
       <li>
-        <button onclick="location.href='GradeDistri.html';">Grade Distribution</button>
+        <form method="post" action="GradeDistri.html">
+          <button type="submit">Grade Distribution</button>
+        </form>
       </li>
       <li>
-        <button onclick="location.href='MyGrades.html';">My Grades</button>
+        <form method="post" action="MyGrades.html">
+          <button type="submit">My Grades</button>
+        </form>
       </li>
     </ul>
 
@@ -28,7 +35,7 @@
     <div class="logo">
         <img src="media/logo.png" alt="logo">
     </div>
-    <div class="container">
+
     <!--top bar information for the displayed course-->
     <table class="overallDisplay">
       <tr>
@@ -37,7 +44,7 @@
         <th>Major?</th>
       </tr>
       <tr>
-        <td><input type="text" name="courseName"></td>
+        <td><input type="text" name="semesterName"></td>
         <td><input type="text" name="creditNumber"></td>
         <td><input type="checkbox" name="major" value="major"></td>
       </tr>
@@ -49,7 +56,7 @@
           <th>Category</th>
           <th>Weight %</th>
           <th>Average %</th>
-          <th></th>
+          <th>Delete</th>
         </tr>
           
         <!--This gets duplicated and removed as categories get added or removed dynamically-->
@@ -61,12 +68,10 @@
     <!--current semester grades displayed along with the save course and addcategory options-->
     <div id="overallDisplay">
       <button class="button" name="addCat"><a>Add Catagory</a></button>
+      <div class="currentGrade" name="currentGrade">Current Grade: </div>
       <button class="button" name="saveCourse">Save Course</button>
-      <div class="currentGradeWrapper"><div class="currentGrade">Current Grade: <div name="currentGrade">N/a</div></div>
     </div>
-  </div>
-      </div>
-    </div>
+
     <!-- Javascript and Jquery sources -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/GradeCalc.js"></script>

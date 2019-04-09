@@ -1,6 +1,6 @@
 
 
-var userData;
+
 
 //total number of all the courses and semester made even including the deleted ones
 var uniqueSemesterID = 0;
@@ -25,7 +25,7 @@ function removeA(arr) {
 function printInfo() {
     console.log("uniqueCourseID: " + uniqueCourseID);
     console.log("uniqueSemesterID: " + uniqueSemesterID);
-    console.log("activeCourseIDs: " + activeCourseIDs); 
+    console.log("activeCourseIDs: " + activeCourseIDs);
     console.log("activeSemesterIDs: " + activeSemesterIDs);
 }
 
@@ -52,7 +52,7 @@ function deleteSemester(id) {
     removeA(activeSemesterIDs, parseFloat(id));
     activeCourseIDs[id]=[];
     if(activeSemesterIDs.length < 1) {
-        newSemester(4);
+        newSemester();
     }
     printInfo();
 }
@@ -68,23 +68,23 @@ function deleteCourse(semID,cID) {
 }
 
 function printNewSemesterToScreen() {
-    return '<div class="semester" name="semester-' + uniqueSemesterID + '">' + 
-        '<div class="semesterName">Semester Name: ' +
+    return '<div class="semester" name="semester-' + uniqueSemesterID + '">' +
+        '<div class="semesterName">Semester Name' +
             '<input type="text" name="semesterName-' + uniqueSemesterID + '">' +
-            '<button type="submit" class="deleteSemester deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
+            '<button type="submit" class="deleteSemester" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
       '<table class="classList-'+ uniqueSemesterID +'">' +
         '<!--Heading for the course list table for this semester-->' +
         '<tr>'+
-            '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit #</th><th>GPA</th><th></th>'+
+            '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit #</th><th>GPA</th><th>Delete</th>'+
         '</tr>' +
         '<!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->' +
         '<!--Here is where other courses would get added -->' +
       '</table>' +
       '<div class="overallDisplay">' +
         '<!--output divs for major and normal gpa for this semester-->' +
-        '<div class="leftGPA">GPA: <div name="GPA-' + uniqueSemesterID + '">N/a</div></div>' + 
+        '<div class="leftGPA">GPA: <div name="GPA-' + uniqueSemesterID + '">N/a</div></div>' +
         '<div class="rightGPA">Major GPA: <div name="majorGPA-' + uniqueSemesterID + '">N/a</div></div>' +
         '<!--button to add course to this semester-->' +
         '<button class="button addCourse" name="' + uniqueSemesterID + '">Add course</button>' +
@@ -96,44 +96,38 @@ function printNewSemesterToScreen() {
 function printNewCourseToScreen(semesterID) {
     return newDiv = '<tr name="course-'+ semesterID +'-'+ uniqueCourseID +'">'+
       '<td><input type="checkbox" name="major-' + semesterID + '-' + uniqueCourseID + '" value="major"></td>' +
-      '<td><input type="text" name="courseName-' + semesterID + '-' + uniqueCourseID + '"></td>' + 
+      '<td><input type="text" name="courseName-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><input type="text" name="courseGrade-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><input type="text" name="creditNumber-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">N/a</div></td>' +
-      '<td><button  class="deletebtn deleteCourse" type="submit" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
+      '<td><button type="submit" class="deleteCourse" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
     '</tr>';
 }
 
 function saveToJson() {
-    var outJ =
-        {"GPA":"" ,"MajorGPA":"" ,"semesters":[]};
     var GPA = $('div[name=GPA]').text();
     var majorGPA = $('div[name=majorGPA]').text();
+    var outputJSON = "{\"GPA\":\"" + GPA + "\" ,";
+    outputJSON += "\"MajorGPA\":\"" + majorGPA + "\" ,";
+    outputJSON += "\"semesters\":[";
 
-    outJ.GPA = GPA; 
-    outJ.MajorGPA = majorGPA; 
 
     for(var s = 0; s < activeSemesterIDs.length; s++) {
-        outJ.semesters.push(            
-            { "name":"" ,"GPA":"" ,"MajorGPA":"" ,"courses":[]
-        })
-
         var sem = activeSemesterIDs[s];
         var semesterName = $('input[name=semesterName-'+sem+']').val();
+        outputJSON += "{ \"name\":\""
         if(semesterName != ""){
-            outJ.semesters[s].name = semesterName;
+            outputJSON += semesterName;
         } else {
-            outJ.semesters[s].name = "semester-" + (s+1); 
+            outputJSON += "semester-" + (s+1);
         }
         GPA = $('div[name=GPA-'+sem+']').text();
         majorGPA = $('div[name=majorGPA-'+sem+']').text();
 
-        outJ.semesters[s].GPA = GPA; 
-        outJ.semesters[s].MajorGPA =majorGPA; 
+        outputJSON += "\" ,\"GPA\":\"" + GPA + "\" ,";
+        outputJSON += "\"MajorGPA\":\"" + majorGPA + "\" ,";
+        outputJSON += "\"courses\":[";
         for( var c = 0; c < activeCourseIDs[sem].length; c++) {
-            outJ.semesters[s].courses.push(
-                { "name":"" ,"major":"" ,"credits":"" ,"grade":"" ,"GPA":""}
-            )
             var cor = activeCourseIDs[sem][c];
             //get value of major course checkbox
             var majorCourse = false;
@@ -149,25 +143,23 @@ function saveToJson() {
             //getValue of GPA
             var GPA = $('div[name=GPAOutput-'+sem+'-'+cor+']').text();
             if(GPA != "N/a") {
+            outputJSON += "{ \"name\":\"";
                 if(courseName != ""){
-                    outJ.semesters[s].courses[c].name = courseName;
+                    outputJSON += courseName;
                 } else {
-                    outJ.semesters[s].courses[c].name = "course-" + (c+1); 
+                    outputJSON += "course-" + (c+1);
                 }
-                outJ.semesters[s].courses[c].major = majorCourse
-                outJ.semesters[s].courses[c].credits = creditNumber
-                outJ.semesters[s].courses[c].grade = courseGrade
-                outJ.semesters[s].courses[c].GPA = GPA
+                outputJSON += "\" ,\"major\":\"" + majorCourse + "\" ,";
+                outputJSON += "\"credits\":\"" + creditNumber + "\" ,";
+                outputJSON += "\"grade\":\"" + courseGrade + "\" ,";
+                outputJSON += "\"GPA\":\"" + GPA + "\"} ,";
             }
         }
-    }
-    if(userData != null)
-    {
-        userData.semesterData = outJ;
-        sessionStorage.setItem('json', JSON.stringify(userData));
-    } else {
-        sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
-    }
+        outputJSON += "]} ,";
+        }
+    outputJSON += "]}";
+    console.log(outputJSON);
+    // saveDataToFirebase(outputJSON)
 }
 
 function updateScreen() {
@@ -210,7 +202,7 @@ function updateScreen() {
                 } else if(grade == 'C-') {
                     gpa = "1.70"
                 } else if(grade == 'D+') {
-                    gpa = "1.30"
+                    gpa = "1.3"
                 } else if(grade == 'D') {
                     gpa = "1.00"
                 } else if(grade == 'F') {
@@ -259,14 +251,17 @@ function updateScreen() {
     $('div[name=majorGPA]').html(finalMOGPA)
 };
 
-function loadJson(data) {
+function loadJson() {
     uniqueSemesterID = 0;
     uniqueCourseID = 0;
     activeSemesterIDs = [];
     activeCourseIDs = [[]];
 
     $('div[class=semesterList]').html("");
-      var tUCID = 0
+
+    // var data = loadDataFromFirebase();
+    var data = {"GPA":"3.08" ,"MajorGPA":"3.10" ,"semesters":[{ "name":"Freshmen 1" ,"GPA":"3.23" ,"MajorGPA":"3.04" ,"courses":[{ "name":"Physics" ,"major":"false" ,"credits":"3" ,"grade":"A-" ,"GPA":"3.70"},{ "name":"Physics Lab " ,"major":"false" ,"credits":"1" ,"grade":"C+" ,"GPA":"2.30"},{ "name":"Computing 1" ,"major":"true" ,"credits":"4" ,"grade":"B+" ,"GPA":"3.30"},{ "name":"Circuits 1" ,"major":"true" ,"credits":"3" ,"grade":"B-" ,"GPA":"2.70"},{ "name":"Freshmen Seminar" ,"major":"false" ,"credits":"1" ,"grade":"A" ,"GPA":"4.00"}]},{ "name":"Freshmen 2" ,"GPA":"2.68" ,"MajorGPA":"2.85" ,"courses":[{ "name":"Chemistry" ,"major":"false" ,"credits":"3" ,"grade":"B-" ,"GPA":"2.70"},{ "name":"Chemistry Lab" ,"major":"false" ,"credits":"1" ,"grade":"D+" ,"GPA":"1.3"},{ "name":"Computing 2" ,"major":"true" ,"credits":"4" ,"grade":"A" ,"GPA":"4.00"},{ "name":"Assembly" ,"major":"true" ,"credits":"4" ,"grade":"C-" ,"GPA":"1.70"}]},{ "name":"Sophmore 1" ,"GPA":"3.39" ,"MajorGPA":"3.43" ,"courses":[{ "name":"Comp Architecture" ,"major":"true" ,"credits":"3" ,"grade":"A" ,"GPA":"4.00"},{ "name":"Computing 3" ,"major":"true" ,"credits":"4" ,"grade":"B" ,"GPA":"3.00"},{ "name":"Intro to Psych" ,"major":"false" ,"credits":"3" ,"grade":"B+" ,"GPA":"3.30"}]}]};
+    var tUCID = 0
     for(var s = 0; s < data.semesters.length; s++) {
 
         newSemester(data.semesters[s].courses.length);
@@ -288,24 +283,17 @@ function loadJson(data) {
 }
 
 $(document).ready(function () {
-    userData = JSON.parse(sessionStorage.getItem('json'));
-    console.log(userData);
-    if(userData != null)
-    {
-        loadJson(userData.semesterData)
-    } else {
     newSemester(4);
-    }
 });
 
 
-  
+
 
 $('button[name=addSemester]').on('click',function() { //add new semester
     newSemester(4);
 });
 
-$('.semesterList').on('click','.addCourse',function() {  
+$('.semesterList').on('click','.addCourse',function() {
     newCourse($(this).attr('name'));
 });
 
@@ -321,7 +309,6 @@ $('.semesterList').on('click','.deleteCourse',function() {
 
 $('button[name=saveData]').on('click',function() {
     saveToJson();
-    window.location.href="MyGrades.html";
 });
 
 $('button[name=loadTest]').on('click',function() {
@@ -331,5 +318,3 @@ $('button[name=loadTest]').on('click',function() {
 $('.semesterList').on('blur','input',function() {
     updateScreen();
 });
-
-
