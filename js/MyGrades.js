@@ -111,7 +111,6 @@ function loadUserJson() {
     */
     loadSemesterData(data.semesterData);
     loadClassData(data.classData);
-
 }
 
 function printNewSemsesters(num) {
@@ -177,6 +176,8 @@ $(document).ready(function () {
         sessionStorage.setItem('json', JSON.stringify(userData));
     }
     loadUserJson();
+
+    saveDataToFirebase(userData);
 });
 
 
