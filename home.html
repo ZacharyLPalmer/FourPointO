@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+</head>
+
+<body>
+    <p>Welcome!</p>
+    <button onclick="logout()">Signout</button>
+
+    <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyDHWm4TxY0dzE7iqurAjaNj-Qpn7Nenqe4",
+          authDomain: "fourpointo-5436a.firebaseapp.com",
+          databaseURL: "https://fourpointo-5436a.firebaseio.com",
+          projectId: "fourpointo-5436a",
+          storageBucket: "fourpointo-5436a.appspot.com",
+          messagingSenderId: "292235609512"
+        };
+        firebase.initializeApp(config);
+
+
+        function logout() {
+            firebase.auth().signOut().then(function() {
+                console.log("Logged out!");
+                window.location.href = 'signin.html';
+            }, function(error) {
+                console.log(error.code);
+                console.log(error.message);
+            });
+        }
+
+
+
+        //Handle Account Status
+        firebase.auth().onAuthStateChanged(firebaseUser => {
+            if (firebaseUser) {
+                //window.location.href = 'index.html'; //After successful login, user will be redirected to home.html
+                console.log("User signed in");
+            } else {
+
+            }
+        });
+    </script>
+</body></html>

@@ -8,27 +8,35 @@
   <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+
 </head>
 
-
-<body>
-<div class="applicationWrapper">
 <!--Top nav bar-->
 <ul class="nav">
   <li>
-    <button class="active" onclick="location.href='GPACalc.html';">GPA Calculation</button>
+    <form method="post" action="GPACalc.html">
+      <button class="active" type="submit">GPA Calculation</button>
+    </form>
   </li>
   <li>
-    <button onclick="location.href='GradeCalc.html';">Grade Calculation</button>
+    <form method="post" action="GradeCalc.html">
+      <button type="submit">Grade Calculation</button>
+    </form>
   </li>
   <li>
-    <button onclick="location.href='GradeDistri.html';">Grade Distribution</button>
+    <form method="post" action="GradeDistri.html">
+      <button type="submit">Grade Distribution</button>
+    </form>
   </li>
   <li>
-    <button onclick="location.href='MyGrades.html';">My Grades</button>
+    <form method="post" action="MyGrades.html">
+      <button type="submit">My Grades</button>
+    </form>
   </li>
 </ul>
 
+<body>
 
 <!--logo div-->
 <div class="logo">
@@ -42,17 +50,18 @@
   <!--displays your overall gpa/major gpa -->
   <button class="button" name="addSemester">Add Semester</button>
   <button class="button" name="saveData">Save Data</button>
+  <button name="loadTest">LOAD TEST DATA [DEBUG ONLY]</button>
 </div>
 
 <div class="semesterList">
-<!---This will be a div that gets duplicated and 
+<!---This will be a div that gets duplicated and
   removed as semesters get added or removed dynamically
   -->
 
-  
+
 </div>
 </div>
-</div>
-</body>
+<script src="js/authentication.js"></script>
 <script src="js/GPACalc.js"></script>
+</body>
 </html>
