@@ -176,7 +176,6 @@ $(document).ready(function () {
         sessionStorage.setItem('json', JSON.stringify(userData));
     }
     loadUserJson();
-
      saveDataToFirebase(userData); //need to sign in before using this function
 });
 
