@@ -26,6 +26,7 @@ function getUserFromLocalStorageAndSignIn() {
   return firebase.auth().signInWithEmailAndPassword(email, password)
     .then(res => {
       console.log("signIn Success")
+      loadDataFromFirebase();
       return res.user
     })
     .catch(error => {
@@ -39,16 +40,3 @@ function getUserFromLocalStorageAndSignIn() {
     });
 }
 
-function saveDataToFirebase(data) {
-  var firebaseRef = firebase.database().ref();
-  firebaseRef.child("users/" + user.uid).set(data);
-}
-
-function loadDataFromFirebase() {
-  return (async () => (
-    await firebase
-      .database()
-      .ref('/users/' + user.uid)
-      .once('value')
-  ).val())()
-}

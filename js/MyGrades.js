@@ -1,5 +1,5 @@
 var userData;
-var testUserData =
+/*var testUserData =
 {
 "UserID":"123",
 "semesterData":
@@ -56,10 +56,11 @@ var testUserData =
         ]
     }
 };
-var testClassData = {}
+*/
 
 function loadSemesterData(data) {
     console.log(data);
+    data=data.semesterData;
     $('div[name=GPA]').text(data.GPA);
     $('div[name=majorGPA]').text(data.MajorGPA);
     printNewSemsesters(data.semesters.length);
@@ -71,6 +72,7 @@ function loadSemesterData(data) {
 }
 
 function loadClassData(data) {
+    data = data.classData;
     var overallGrade = 0;
     var majorGrade = 0;
     var overallCreditCount = 0;
@@ -105,13 +107,31 @@ function loadClassData(data) {
 }
 
 function loadUserJson() {
-    var data = userData;
-    /*
-    This will be where we load in the JSON's from the specific user
-    */
-    loadSemesterData(data.semesterData);
-    loadClassData(data.classData);
+    data = userData;
+    loadSemesterData(data);
+    loadClassData(data);
+    sessionStorage.setItem('json', JSON.stringify(data));
 }
+
+function saveDataToFirebase(data) {
+    curUser = firebase.auth().currentUser
+    firebase.database().ref('users/' + curUser.uid).set(data);
+  }
+  
+  function loadDataFromFirebase() {
+    curUser = firebase.auth().currentUser
+    firebase.database().ref('/users/' + curUser.uid).once('value', function(snapshot) {
+        // The callback succeeded; do something with the final result.
+        userData = snapshot.val();
+        loadUserJson();
+      }, function(error) {
+        // The callback failed.
+        console.error(error);
+      });
+}
+  
+
+
 
 function printNewSemsesters(num) {
     for(var i = 0; i < num; i++) {
@@ -126,7 +146,7 @@ function printNewSemsesters(num) {
 
 function printNewClasses(num) {
     for(var i = 0; i < num; i++) {
-        var data = JSON.stringify(testUserData.classData.currentCourses[i]);
+        var data = JSON.stringify(userData.classData.currentCourses[i]);
         newTR = '<tr>'+
         '<td><a name="className-'+i+'"></a></td>'+
         '<td><a name="major-'+i+'"></a></td>'+
@@ -172,14 +192,11 @@ $(document).ready(function () {
     console.log(userData);
     if(userData == null) {
         console.log("wut");
-        userData = testUserData;
-        sessionStorage.setItem('json', JSON.stringify(userData));
+        //userData = testUserData;
+        //sessionStorage.setItem('json', JSON.stringify(userData));
     }
-    loadUserJson();
-     saveDataToFirebase(userData); //need to sign in before using this function
+
 });
-
-
 
 
 $('button[name=addSemester]').on('click',function() { //add new semester

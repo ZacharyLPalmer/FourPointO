@@ -166,6 +166,8 @@ function saveToJson() {
     } else {
         sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
     }
+
+    
 }
 
 function updateScreen() {
@@ -292,7 +294,7 @@ $(document).ready(function () {
     {
         loadJson(userData.semesterData)
     } else {
-    newSemester(4);
+        newSemester(4);
     }
 });
 
