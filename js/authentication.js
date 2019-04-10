@@ -40,6 +40,7 @@ function getUserFromLocalStorageAndSignIn() {
 }
 
 function saveDataToFirebase(data) {
+  var firebaseRef = firebase.database().ref();
   firebaseRef.child("users/" + user.uid).set(data);
 }
 

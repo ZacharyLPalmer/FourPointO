@@ -82,7 +82,7 @@
 //     ".write": true
 //   }
 // }
-          // let user = async () => await getUserFromLocalStorageAndSignIn() //have tp login from the start
+           // let user = async () => await getUserFromLocalStorageAndSignIn() //have tp login from the start
           let user = null
           async function save (event) {
             user = await getUserFromLocalStorageAndSignIn() // signin User
@@ -145,7 +145,7 @@
               console.log("trying to signin")
               // warning security leak: storing in localStorage
               localStorage.setItem('FourPointO:authUser', JSON.stringify({ email, password }));
-
+              window.location.href = "MyGrades.html";
               // firebase.auth().signInWithEmailAndPassword(email, password)
               //   .then(res => {
               //     console.log("signIn success", res)

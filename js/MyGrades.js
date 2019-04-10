@@ -1,5 +1,5 @@
 var userData;
-var testUserData = 
+var testUserData =
 {
 "UserID":"123",
 "semesterData":
@@ -176,18 +176,17 @@ $(document).ready(function () {
         sessionStorage.setItem('json', JSON.stringify(userData));
     }
     loadUserJson();
-
-    saveDataToFirebase(userData);
+     saveDataToFirebase(userData); //need to sign in before using this function
 });
 
 
-  
+
 
 $('button[name=addSemester]').on('click',function() { //add new semester
     newSemester(4);
 });
 
-$('.semesterList').on('click','.addCourse',function() {  
+$('.semesterList').on('click','.addCourse',function() {
     newCourse($(this).attr('name'));
 });
 
@@ -212,5 +211,3 @@ $('button[name=loadTest]').on('click',function() {
 $('.semesterList').on('blur','input',function() {
     updateScreen();
 });
-
-
