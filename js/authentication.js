@@ -23,10 +23,24 @@ function getUserFromLocalStorageAndSignIn() {
     return
   }
   const { email, password } = authData
+
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  .then(function() {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+
+
+
+
   return firebase.auth().signInWithEmailAndPassword(email, password)
     .then(res => {
       console.log("signIn Success")
-      loadDataFromFirebase();
+      loadData();
       return res.user
     })
     .catch(error => {

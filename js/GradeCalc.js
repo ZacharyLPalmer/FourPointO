@@ -219,6 +219,17 @@ $(document).ready(function () {
 });
 
 
+$('input[name=user]').on('click',function() {
+    //logged in
+    if(sessionStorage.getItem("infoLoaded")) { 
+        window.location.href = "home.html";
+    } else { //not logged in
+        window.location.href = "signin.html";
+    }
+});
+
+
+
 $('button[name=saveCourse]').on('click',function() {
    window.location.href="MyGrades.html";
 });

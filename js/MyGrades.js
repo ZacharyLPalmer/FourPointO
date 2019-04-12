@@ -1,5 +1,169 @@
-var userData;
-/*var testUserData =
+//function takes in a json containing semester information and populates the appropriate table
+function loadSemesterData(data) {
+    //debug log
+    console.log("Printing " + data.semesters.length + " semesters");
+
+    printNewSemsesters(data.semesters.length);
+    $('div[name=GPA]').text(data.GPA);
+    $('div[name=majorGPA]').text(data.MajorGPA);
+    for(var s = 0; s < data.semesters.length; s++) {
+        $('a[name=semesterName-' + s + ']').text(data.semesters[s].name);
+        $('a[name=majorGPA-' + s + ']').text(data.semesters[s].MajorGPA);
+        $('a[name=overallGPA-' + s + ']').text(data.semesters[s].GPA);
+    }
+}
+
+//function takes in a json containing class information and populates the appropriate table
+function loadClassData(data) {
+    //debug log
+    console.log("Printing " + data.currentCourses.length + " classes");
+
+    //variables
+    var overallGrade = 0;
+    var majorGrade = 0;
+    var overallCreditCount = 0;
+    var majorCreditCount = 0;
+
+    printNewClasses(data.currentCourses.length);
+    for(var i = 0; i < data.currentCourses.length; i++) {
+
+        //grab relevant info from the object
+        var grade = parseFloat(data.currentCourses[i].Grade);
+        var credit = parseFloat(data.currentCourses[i].CreditNumber);
+
+        //print class info
+        $('a[name=className-' + i + ']').text(data.currentCourses[i].Name);
+        $('a[name=credit-' + i + ']').text(data.currentCourses[i].CreditNumber);
+        $('a[name=grade-' + i + ']').text(data.currentCourses[i].Grade);
+
+        //print major course info and also do gpa calcualtions
+        if(data.currentCourses[i].MajorCourse=='true') {
+            $('a[name=major-' + i + ']').text("Yes");
+
+            majorGrade += (grade*credit);
+            majorCreditCount += credit;
+        } else {
+            $('a[name=major-' + i + ']').text("No");
+        }
+        overallGrade += (grade*credit);
+        overallCreditCount += credit;
+    }
+
+    //calcualte and print final gpa
+    var finalMajorGrade = majorGrade/majorCreditCount;
+    var finalGrade = overallGrade/overallCreditCount;
+    $('div[name=semGPA]').text(percentToGPA(finalGrade/100));
+    $('div[name=semMajorGPA]').text(percentToGPA(finalMajorGrade/100));
+}
+
+//calls the semester and class data loaders
+function loadUserJson() {
+    data = JSON.parse(sessionStorage.getItem('json'));
+    loadSemesterData(data.semesterData);
+    loadClassData(data.classData);
+}
+  
+//loads data from firebase if user has just logged in, else build page from session json
+function loadData() {
+    
+    // user just logged in so grab data from databse
+    if(!sessionStorage.getItem("infoLoaded")) { 
+        // sets the infoLoaded flag to true so future page loads will be from session json
+        sessionStorage.setItem('infoLoaded', 'true');
+
+        user = firebase.auth().currentUser
+        //retrieve json snapshot
+        firebase.database().ref('/users/' + user.uid).once('value', function(snapshot) {
+            // The callback succeeded
+            sessionStorage.setItem('json', JSON.stringify(snapshot.val()));
+            loadUserJson();
+
+        }, function(error) {
+            // The callback failed.
+            console.error(error);
+        });
+    } else {
+        loadUserJson();
+        curUser = firebase.auth().currentUser
+        var userData = JSON.parse(sessionStorage.getItem('json'));
+        firebase.database().ref('users/' + curUser.uid).set(userData);
+    }
+}
+  
+
+
+//print blank semesters to screen
+function printNewSemsesters(num) {
+    for(var i = 0; i < num; i++) {
+        newTR = '<tr>'+
+        '<td><a name="semesterName-'+i+'"></a></td>'+
+        '<td><a name="majorGPA-'+i+'"></a></td>'+
+        '<td><a name="overallGPA-'+i+'"></a></td>'+
+        '</tr>'
+        $(".semesters").append(newTR);
+    }
+}
+
+//print blank classes to screen
+function printNewClasses(num) {
+    for(var i = 0; i < num; i++) {
+        var userData = JSON.parse(sessionStorage.getItem('json'));
+        var data = JSON.stringify(userData.classData.currentCourses[i]);
+        newTR = '<tr name="course-'+i+'">'+
+        '<td><a name="className-'+i+'"></a></td>'+
+        '<td><a name="major-'+i+'"></a></td>'+
+        '<td><a name="credit-'+i+'"></a></td>'+
+        '<td><a name="grade-'+i+'"></a></td>'+
+        '<td><button onclick="location.href=\'GradeCalc.html?course='+i+'\';" class="deletebtn" name="editCourse-'+i+'">Edit</button></td>'+
+        '</tr>'
+        $(".classes").append(newTR);
+    }
+}
+
+//convert percent value to GPA point calues
+function percentToGPA(percent) {
+    var gpa = "N/a";
+    console.log(percent);
+    if(percent >= .93 ) {
+        gpa = "4.00";
+    } else if(percent >= .90) {
+        gpa = "3.70"
+    } else if(percent >= .87) {
+        gpa = "3.30"
+    } else if(percent >= .83) {
+        gpa = "3.00"
+    } else if(percent >= .80) {
+        gpa = "2.70"
+    } else if(percent >= .77) {
+        gpa = "2.30"
+    } else if(percent >= .73) {
+        gpa = "2.00"
+    } else if(percent >= .70) {
+        gpa = "1.70"
+    } else if(percent >= .67) {
+        gpa = "1.30"
+    } else if(percent >= .60) {
+        gpa = "1.00"
+    } else if(percent >= 0) {
+        gpa = "0.00"
+    }
+    return gpa;
+}
+
+
+$('input[name=user]').on('click',function() {
+    //logged in
+    if(sessionStorage.getItem("infoLoaded")) { 
+        window.location.href = "home.html";
+    } else { //not logged in
+        window.location.href = "signin.html";
+    }
+});
+
+
+
+// can be ignored, just a playground for creating JSON's
+var testUserData =
 {
 "UserID":"123",
 "semesterData":
@@ -56,175 +220,3 @@ var userData;
         ]
     }
 };
-*/
-
-function loadSemesterData(data) {
-    console.log(data);
-    data=data.semesterData;
-    $('div[name=GPA]').text(data.GPA);
-    $('div[name=majorGPA]').text(data.MajorGPA);
-    printNewSemsesters(data.semesters.length);
-    for(var s = 0; s < data.semesters.length; s++) {
-        $('a[name=semesterName-' + s + ']').text(data.semesters[s].name);
-        $('a[name=majorGPA-' + s + ']').text(data.semesters[s].MajorGPA);
-        $('a[name=overallGPA-' + s + ']').text(data.semesters[s].GPA);
-    }
-}
-
-function loadClassData(data) {
-    data = data.classData;
-    var overallGrade = 0;
-    var majorGrade = 0;
-    var overallCreditCount = 0;
-    var majorCreditCount = 0;
-
-    printNewClasses(data.currentCourses.length);
-    for(var i = 0; i < data.currentCourses.length; i++) {
-        $('a[name=className-' + i + ']').text(data.currentCourses[i].Name);
-        $('a[name=credit-' + i + ']').text(data.currentCourses[i].CreditNumber);
-        $('a[name=grade-' + i + ']').text(data.currentCourses[i].Grade);
-
-        var grade = parseFloat(data.currentCourses[i].Grade);
-        var credit = parseFloat(data.currentCourses[i].CreditNumber);
-
-
-        if(data.currentCourses[i].MajorCourse=='true') {
-            $('a[name=major-' + i + ']').text("Yes");
-            majorGrade += (grade*credit);
-            majorCreditCount += credit;
-        } else {
-            $('a[name=major-' + i + ']').text("No");
-        }
-        overallGrade += (grade*credit);
-        overallCreditCount += credit;
-    }
-
-    var finalMajorGrade = majorGrade/majorCreditCount;
-    var finalGrade = overallGrade/overallCreditCount;
-    console.log(overallCreditCount);
-    $('div[name=semGPA]').text(percentToGPA(finalGrade/100));
-    $('div[name=semMajorGPA]').text(percentToGPA(finalMajorGrade/100));
-}
-
-function loadUserJson() {
-    data = userData;
-    loadSemesterData(data);
-    loadClassData(data);
-    sessionStorage.setItem('json', JSON.stringify(data));
-}
-
-function saveDataToFirebase(data) {
-    curUser = firebase.auth().currentUser
-    firebase.database().ref('users/' + curUser.uid).set(data);
-  }
-  
-  function loadDataFromFirebase() {
-    curUser = firebase.auth().currentUser
-    firebase.database().ref('/users/' + curUser.uid).once('value', function(snapshot) {
-        // The callback succeeded; do something with the final result.
-        userData = snapshot.val();
-        loadUserJson();
-      }, function(error) {
-        // The callback failed.
-        console.error(error);
-      });
-}
-  
-
-
-
-function printNewSemsesters(num) {
-    for(var i = 0; i < num; i++) {
-        newTR = '<tr>'+
-        '<td><a name="semesterName-'+i+'"></a></td>'+
-        '<td><a name="majorGPA-'+i+'"></a></td>'+
-        '<td><a name="overallGPA-'+i+'"></a></td>'+
-        '</tr>'
-        $(".semesters").append(newTR);
-    }
-}
-
-function printNewClasses(num) {
-    for(var i = 0; i < num; i++) {
-        var data = JSON.stringify(userData.classData.currentCourses[i]);
-        newTR = '<tr>'+
-        '<td><a name="className-'+i+'"></a></td>'+
-        '<td><a name="major-'+i+'"></a></td>'+
-        '<td><a name="credit-'+i+'"></a></td>'+
-        '<td><a name="grade-'+i+'"></a></td>'+
-        '<td><button onclick="location.href=\'GradeCalc.html?course='+i+'\';" class="deletebtn" name="editCourse-'+i+'">Edit</button></td>'+
-        '</tr>'
-        $(".classes").append(newTR);
-    }
-}
-
-function percentToGPA(percent) {
-    var gpa = "N/a";
-    console.log(percent);
-    if(percent >= .93 ) {
-        gpa = "4.00";
-    } else if(percent >= .90) {
-        gpa = "3.70"
-    } else if(percent >= .87) {
-        gpa = "3.30"
-    } else if(percent >= .83) {
-        gpa = "3.00"
-    } else if(percent >= .80) {
-        gpa = "2.70"
-    } else if(percent >= .77) {
-        gpa = "2.30"
-    } else if(percent >= .73) {
-        gpa = "2.00"
-    } else if(percent >= .70) {
-        gpa = "1.70"
-    } else if(percent >= .67) {
-        gpa = "1.3"
-    } else if(percent >= .60) {
-        gpa = "1.00"
-    } else if(percent >= 0) {
-        gpa = "0.00"
-    }
-    return gpa;
-}
-
-$(document).ready(function () {
-    userData = JSON.parse(sessionStorage.getItem('json'));
-    console.log(userData);
-    if(userData == null) {
-        console.log("wut");
-        //userData = testUserData;
-        //sessionStorage.setItem('json', JSON.stringify(userData));
-    }
-
-});
-
-
-$('button[name=addSemester]').on('click',function() { //add new semester
-    newSemester(4);
-});
-
-$('.semesterList').on('click','.addCourse',function() {
-    newCourse($(this).attr('name'));
-});
-
-$('.semesterList').on('click','.deleteSemester',function() {
-    deleteSemester($(this).attr('name'));
-    updateScreen();
-});
-
-$('.semesterList').on('click','.deleteCourse',function() {
-    deleteCourse($(this).attr('semester'),$(this).attr('course'));
-    updateScreen();
-});
-
-$('button[name=saveData]').on('click',function() {
-    saveToJson();
-});
-
-$('button[name=loadTest]').on('click',function() {
-    loadJson();
-});
-
-$('.semesterList').on('blur','input',function() {
-    updateScreen();
-});

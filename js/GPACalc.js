@@ -166,7 +166,6 @@ function saveToJson() {
     } else {
         sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
     }
-
     
 }
 
@@ -330,4 +329,13 @@ $('button[name=loadTest]').on('click',function() {
 
 $('.semesterList').on('blur','input',function() {
     updateScreen();
+});
+
+$('input[name=user]').on('click',function() {
+    //logged in
+    if(sessionStorage.getItem("infoLoaded")) { 
+        window.location.href = "home.html";
+    } else { //not logged in
+        window.location.href = "signin.html";
+    }
 });

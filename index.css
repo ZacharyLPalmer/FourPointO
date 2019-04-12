@@ -91,3 +91,14 @@ button:hover {
     text-decoration: none;
     color: aqua;
 }
+
+img {
+    width: 350px;
+}
+
+.logo {
+    margin: auto;
+    background: white;
+    padding: 10px;
+    text-align: center;
+  }
