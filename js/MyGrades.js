@@ -62,12 +62,23 @@ function loadUserJson() {
     loadSemesterData(data.semesterData);
     loadClassData(data.classData);
 }
+
+function createNewUserFromSemesterJson(newUserData) {
+    var username = JSON.parse(localStorage.getItem('FourPointO:authUser'));
+    data = {
+        "UserID": username.email,
+        "semesterData": newUserData,
+        "classData":   
+        { "currentCourses":[] }
+    }
+    sessionStorage.setItem('json',JSON.stringify(data));
+}
   
 //loads data from firebase if user has just logged in, else build page from session json
 function loadData() {
-    
     // user just logged in so grab data from databse
     if(!sessionStorage.getItem("infoLoaded")) { 
+
         // sets the infoLoaded flag to true so future page loads will be from session json
         sessionStorage.setItem('infoLoaded', 'true');
 
@@ -83,6 +94,12 @@ function loadData() {
             console.error(error);
         });
     } else {
+        //new user with no semester data saved yet but with a temp json
+        var newUserData = JSON.parse(sessionStorage.getItem('newUserSemesterJson'));
+            if(newUserData != null) {
+                createNewUserFromSemesterJson(newUserData)
+                sessionStorage.setItem('newUserSemesterJson', null);
+            }
         loadUserJson();
         curUser = firebase.auth().currentUser
         var userData = JSON.parse(sessionStorage.getItem('json'));

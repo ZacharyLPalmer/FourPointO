@@ -159,7 +159,7 @@ function saveToJson() {
             }
         }
     }
-    if(userData != null)
+    if(sessionStorage.getItem("json")==null)
     {
         userData.semesterData = outJ;
         sessionStorage.setItem('json', JSON.stringify(userData));
