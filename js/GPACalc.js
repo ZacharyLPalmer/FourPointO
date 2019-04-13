@@ -108,6 +108,8 @@ function saveToJson() {
     var GPA = $('div[name=GPA]').text();
     var majorGPA = $('div[name=majorGPA]').text();
 
+	var message = "Data Saved: ";
+
     outJ.GPA = GPA; 
     outJ.MajorGPA = majorGPA; 
 
@@ -118,21 +120,28 @@ function saveToJson() {
 
         var sem = activeSemesterIDs[s];
         var semesterName = $('input[name=semesterName-'+sem+']').val();
+
+        //Check semester name
         if(semesterName != ""){
             outJ.semesters[s].name = semesterName;
         } else {
+            message = message.concat( "\nNo name for semester-" + (s+1) + ". Default name used." );
+            semesterName = "semester-" + (s+1);
             outJ.semesters[s].name = "semester-" + (s+1); 
         }
+
         GPA = $('div[name=GPA-'+sem+']').text();
         majorGPA = $('div[name=majorGPA-'+sem+']').text();
 
         outJ.semesters[s].GPA = GPA; 
         outJ.semesters[s].MajorGPA =majorGPA; 
+        
         for( var c = 0; c < activeCourseIDs[sem].length; c++) {
             outJ.semesters[s].courses.push(
                 { "name":"" ,"major":"" ,"credits":"" ,"grade":"" ,"GPA":""}
             )
             var cor = activeCourseIDs[sem][c];
+
             //get value of major course checkbox
             var majorCourse = false;
             if($('input[name=major-'+sem+'-'+cor+']').is(':checked')) {
@@ -146,26 +155,36 @@ function saveToJson() {
             var courseGrade = $('input[name=courseGrade-'+sem+'-'+cor+']').val().toUpperCase();
             //getValue of GPA
             var GPA = $('div[name=GPAOutput-'+sem+'-'+cor+']').text();
+
+            // Check Courses
             if(GPA != "N/a") {
                 if(courseName != ""){
                     outJ.semesters[s].courses[c].name = courseName;
                 } else {
+                    message = message.concat( "\nNo name for course-" + (c+1) + " in "+ semesterName +". Default name used." );
                     outJ.semesters[s].courses[c].name = "course-" + (c+1); 
                 }
+
                 outJ.semesters[s].courses[c].major = majorCourse
                 outJ.semesters[s].courses[c].credits = creditNumber
                 outJ.semesters[s].courses[c].grade = courseGrade
                 outJ.semesters[s].courses[c].GPA = GPA
             }
-        }
-    }
-    if(userData != null)
+
+        }// For - courses
+    }// For - Semester
+    
+    // TODO: remove this alert once default values are added
+    alert(message); // Show any missing info that has been auto filled.
+	
+    if(sessionStorage.getItem("json")==null)
     {
         userData.semesterData = outJ;
         sessionStorage.setItem('json', JSON.stringify(userData));
     } else {
         sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
     }
+    
 }
 
 function updateScreen() {
@@ -179,18 +198,31 @@ function updateScreen() {
     var runningOMGPA = 0; // overall major gpa
 
     for(var s = 0; s < activeSemesterIDs.length; s++) {
-        console.log("test")
         var sem = activeSemesterIDs[s];
+
+		var semName = $('input[name=semesterName-'+sem+']').val();
+        if(semName == ""){
+            semName = "semester-" + (s+1); 
+        }
+
         runningCN = 0;
         runningGPA = 0;
         runningMCN = 0;
         runningMGPA = 0;
+
             console.log("test:"+activeCourseIDs[sem])
             for( var c = 0; c < activeCourseIDs[sem].length; c++) {
                 var cor = activeCourseIDs[sem][c];
+
+				var corName = $('input[name=courseName-'+sem+'-'+cor+']').val();
+                if(corName == ""){
+                    corName = "course-" + (c+1); 
+                }
+
                 var grade = $('input[name=courseGrade-'+sem+'-'+cor+']').val();
                 grade = grade.toUpperCase();
                 var gpa = "N/a"
+            
                 if(grade == 'A') {
                     gpa = "4.00"
                 } else if(grade == 'A-') {
@@ -213,21 +245,41 @@ function updateScreen() {
                     gpa = "1.00"
                 } else if(grade == 'F') {
                     gpa = "0.00"
-                } else {
+                } else if( grade == "" ) {
+					//NOP
+				} else { // Invalid input
+                   alert("Error: Grade is not Valid. " + semName + " - " + corName +"'s GPA Cannot be calculated - ");
                 }
+
                 var creditNumber = parseFloat($('input[name=creditNumber-'+sem+'-'+cor+']').val())
-                if(!isNaN(creditNumber) && gpa != "N/a") {
-                    if($('input[name=major-'+sem+'-'+cor+']').is(':checked')) {
-                        runningMGPA = runningMGPA + (creditNumber*gpa)
-                        runningMCN = runningMCN + creditNumber;
+                
+                if( gpa != "N/a" ) // Don't bother calculating if grade is bad
+                {
+                    if( isNaN(creditNumber))
+                    {
+                        alert("Error: Credit amount must be a number. " + semName + " - " + corName +"'s GPA Cannot be calculated");
+                        gpa = "N/a";
                     }
-                    runningGPA = runningGPA + (creditNumber*gpa)
-                    runningCN = runningCN + creditNumber;
-                } else {
-                    gpa = "N/a";
+                    else if( (creditNumber < 1 || creditNumber > 4) )
+                    {
+                        alert("Error: Credit range is 1 - 4. " + semName + " - " + corName +"'s GPA Cannot be calculated");
+                        gpa = "N/a";
+                    }
+                    else
+                    {
+                        if($('input[name=major-'+sem+'-'+cor+']').is(':checked')) {
+                            runningMGPA = runningMGPA + (creditNumber*gpa);
+                            runningMCN = runningMCN + creditNumber;
+                        }
+
+                        runningGPA = runningGPA + (creditNumber*gpa);
+                        runningCN = runningCN + creditNumber;
+                    }
                 }
+
                 $('div[name=GPAOutput-'+sem+'-'+cor+']').html(gpa)
-            }
+            } // For Courses
+
         var finalGPA = (runningGPA/runningCN).toFixed(2);
         var finalMGPA = (runningMGPA/runningMCN).toFixed(2);
         if(isNaN(finalGPA)) {
@@ -242,7 +294,8 @@ function updateScreen() {
         runningOGPA = runningOGPA + runningGPA; // overall gpa
         runningOMCN = runningOMCN + runningMCN; // overall major credit num
         runningOMGPA = runningOMGPA + runningMGPA; // overall major gpa
-    }
+    } // For semesters
+
     var finalOGPA = (runningOGPA/runningOCN).toFixed(2);
     var finalMOGPA = (runningOMGPA/runningOMCN).toFixed(2);
     if(isNaN(finalOGPA)) {
@@ -264,7 +317,9 @@ function loadJson(data) {
     activeCourseIDs = [[]];
 
     $('div[class=semesterList]').html("");
-      var tUCID = 0
+
+    var tUCID = 0
+
     for(var s = 0; s < data.semesters.length; s++) {
 
         newSemester(data.semesters[s].courses.length);
@@ -292,12 +347,9 @@ $(document).ready(function () {
     {
         loadJson(userData.semesterData)
     } else {
-    newSemester(4);
+        newSemester(4);
     }
 });
-
-
-  
 
 $('button[name=addSemester]').on('click',function() { //add new semester
     newSemester(4);
@@ -328,4 +380,13 @@ $('button[name=loadTest]').on('click',function() {
 
 $('.semesterList').on('blur','input',function() {
     updateScreen();
+});
+
+$('input[name=user]').on('click',function() {
+    //logged in
+    if(sessionStorage.getItem("infoLoaded")) { 
+        window.location.href = "home.html";
+    } else { //not logged in
+        window.location.href = "signin.html";
+    }
 });

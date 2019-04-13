@@ -5,41 +5,42 @@
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <title>Four Point O</title>
 </head>
-<body>
 
-<div class="applicationWrapper">
+<body>
+  <div class="applicationWrapper">
+  <input class="close" name="user" type="image" src="media/user.jpg">
   <!--Top nav bar-->
-  <ul class="nav">
-    <li>
-      <button onclick="location.href='GPACalc.html';">GPA Calculation</button>
-    </li>
-    <li>
-      <button class="active" onclick="location.href='GradeCalc.html';">Grade Calculation</button>
-    </li>
-    <li>
-      <button onclick="location.href='GradeDistri.html';">Grade Distribution</button>
-    </li>
-    <li>
-      <button onclick="location.href='MyGrades.html';">My Grades</button>
-    </li>
-  </ul>
+    <ul class="nav">
+      <li>
+        <button onclick="location.href='GPACalc.html';">GPA Calculation</button>
+      </li>
+      <li>
+        <button class="active" onclick="location.href='GradeCalc.html';">Grade Calculation</button>
+      </li>
+      <li>
+        <button onclick="location.href='GradeDistri.html';">Grade Distribution</button>
+      </li>
+      <li>
+        <button onclick="location.href='MyGrades.html';">My Grades</button>
+      </li>
+    </ul>
 
     <!--logo div-->
     <div class="logo">
         <img src="media/logo.png" alt="logo">
     </div>
-
+    <div class="container">
     <!--top bar information for the displayed course-->
-    <table class="overallDisplay">
-      <tr>
-        <th>Course Name</th>
-        <th>Credit #</th>
-        <th>Major?</th>
-      </tr>
-      <tr>
-        <td><input type="text" name="semesterName"></td>
-        <td><input type="text" name="creditNumber"></td>
-        <td><input type="checkbox" name="major" value="major"></td>
+      <table class="overallDisplay">
+        <tr>
+          <th>Course Name</th>
+          <th>Credit #</th>
+          <th>Major?</th>
+        </tr>
+        <tr>
+          <td><input type="text" name="courseName"></td>
+          <td><input type="text" name="creditNumber"></td>
+          <td><input type="checkbox" name="major" value="major"></td>
         </tr>
       </table>
 

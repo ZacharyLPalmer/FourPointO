@@ -11,10 +11,10 @@ var config = {
 
 firebase.initializeApp(config);
 
-let user = (async () => await getUserFromLocalStorageAndSignIn())();
+let user = (async () => await getUserFromSessionStorageAndSignIn())();
 
-function getUserFromLocalStorageAndSignIn() {
-  const authData = JSON.parse(localStorage.getItem('FourPointO:authUser'));
+function getUserFromSessionStorageAndSignIn() {
+  const authData = JSON.parse(sessionStorage.getItem('FourPointO:authUser'));
   if (!authData) {
     console.log("unable to retreived authData");
     setTimeout(function() {
@@ -23,22 +23,36 @@ function getUserFromLocalStorageAndSignIn() {
     return
   }
   const { email, password } = authData
+
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  .then(function() {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+
+
+
+
   return firebase.auth().signInWithEmailAndPassword(email, password)
     .then(res => {
       console.log("signIn Success")
+      loadData();
       return res.user
     })
-    .catch(error => {
-        console.log("retreived authData are unable to signin");
-        console.log(error.code);
-        console.log(error.message);
-        setTimeout(function() {
-          window.location.href = "signin.html"
-        }, 3000)
-        return null
-    });
+    // .catch(error => {
+    //     console.log("retreived authData are unable to signin");
+    //     console.log(error.code);
+    //     console.log(error.message);
+    //     setTimeout(function() {
+    //       // window.location.href = "signin.html"
+    //     }, 3000)
+    //     return null
+    // });
 }
-
 function saveDataToFirebase(data) {
   var firebaseRef = firebase.database().ref();
   firebaseRef.child("users/" + user.uid).set(data);

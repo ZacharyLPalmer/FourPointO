@@ -11,7 +11,11 @@
 </head>
 
 <body>
-    <p>Welcome!</p>
+    <button onclick="location.href='MyGrades.html';">My Grades</button>
+    <br>
+    <div class="logo">
+            <img src="media/logo.png" alt="logo">
+    </div>
     <button onclick="logout()">Signout</button>
 
     <script>
@@ -27,26 +31,16 @@
         firebase.initializeApp(config);
 
 
+
         function logout() {
             firebase.auth().signOut().then(function() {
                 console.log("Logged out!");
-                window.location.href = 'signin.html';
+                sessionStorage.clear();
+                window.location.href = 'GPACalc.html';
             }, function(error) {
                 console.log(error.code);
                 console.log(error.message);
             });
         }
-
-
-
-        //Handle Account Status
-        firebase.auth().onAuthStateChanged(firebaseUser => {
-            if (firebaseUser) {
-                //window.location.href = 'index.html'; //After successful login, user will be redirected to home.html
-                console.log("User signed in");
-            } else {
-
-            }
-        });
     </script>
 </body></html>
