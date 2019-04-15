@@ -11,15 +11,15 @@ var config = {
 
 firebase.initializeApp(config);
 
-let user = (async () => await getUserFromLocalStorageAndSignIn())();
+let user = (async () => await getUserFromSessionStorageAndSignIn())();
 
-function getUserFromLocalStorageAndSignIn() {
-  const authData = JSON.parse(localStorage.getItem('FourPointO:authUser'));
+function getUserFromSessionStorageAndSignIn() {
+  const authData = JSON.parse(sessionStorage.getItem('FourPointO:authUser'));
   if (!authData) {
     console.log("unable to retreived authData");
     setTimeout(function() {
       window.location.href = "signin.html"
-    }, 3000)
+    }, 0)
     return
   }
   const { email, password } = authData
@@ -49,7 +49,7 @@ function getUserFromLocalStorageAndSignIn() {
         console.log(error.message);
         setTimeout(function() {
           window.location.href = "signin.html"
-        }, 3000)
+        }, 0)
         return null
     });
 }

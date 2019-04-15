@@ -53,41 +53,9 @@
 
           firebase.initializeApp(config);
 
-          // function emailSignUp() {
-          //
-          //     var email = document.getElementById("email_field").value;
-          //     var password = document.getElementById("password_field").value;
-          //
-          //     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-          //         // Handle Errors here.
-          //         var errorCode = error.code;
-          //         var errorMessage = error.message;
-          //         // [START_EXCLUDE]
-          //         if (errorCode == 'auth/weak-password') {
-          //             alert('The password is too weak.');
-          //         } else {
-          //             alert(errorMessage);
-          //         }
-          //         console.log(error);
-          //         // [END_EXCLUDE]
-          //     });
-          // }
-
-
-
-
-          //document.getElementById("bttn").addEventListener("click", save);
-//           {
-//   /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
-//   "rules": {
-//     ".read": true,
-//     ".write": true
-//   }
-// }
-           // let user = async () => await getUserFromLocalStorageAndSignIn() //have tp login from the start
           let user = null
           async function save (event) {
-            user = await getUserFromLocalStorageAndSignIn() // signin User
+            user = await getUserFromSessionStorageAndSignIn() // signin User
 
             if (!user) {
               console.log("Please set user | sign in first")
@@ -99,14 +67,10 @@
               name: "kwan3"
             });
             const data = (await firebase.database().ref('/users/' + user.uid).once('value')).val()//load data
-
-            // firebaseRef.child("users/" + user.uid).set(saveToJson(data));
           }
 
-          // let user = getUserFromStorage()
-
-          function getUserFromLocalStorageAndSignIn() {
-            const authData = JSON.parse(localStorage.getItem('FourPointO:authUser'));
+          function getUserFromSessionStorageAndSignIn() {
+            const authData = JSON.parse(sessionStorage.getItem('FourPointO:authUser'));
             const { email, password } = authData
             return firebase.auth().signInWithEmailAndPassword(email, password)
               .then(res => {
@@ -131,13 +95,6 @@
               });
           }
 
-
-
-
-
-
-
-
           document.getElementById("btn").addEventListener("click", emailSignin);
 
           function emailSignin(event) {
@@ -145,30 +102,12 @@
               var email = document.getElementById("email_field").value;
               var password = document.getElementById("password_field").value;
               console.log("trying to signin")
-              // warning security leak: storing in localStorage
-              localStorage.setItem('FourPointO:authUser', JSON.stringify({ email, password }));
-              
+              sessionStorage.setItem('FourPointO:authUser', JSON.stringify(
+                { email, 
+                  password 
+                }));
               window.location.href = "MyGrades.html";
-              // firebase.auth().signInWithEmailAndPassword(email, password)
-              //   .then(res => {
-              //     console.log("signIn success", res)
-              //     user = res.user
-              //   })
-              //   // .then(res => (window.location.href = "home.html"))
-              //   .catch(error => {
-              //       console.log(error.code);
-              //       console.log(error.message);
-              //   });
           }
-
-          // function signout() {
-          //     firebase.auth().signOut().then(function() {
-          //         console.log("Logged out!");
-          //     }, function(error) {
-          //         console.log(error.code);
-          //         console.log(error.message);
-          //     });
-          // }
         })()
 
     </script>

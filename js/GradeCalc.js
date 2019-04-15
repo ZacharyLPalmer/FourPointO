@@ -226,6 +226,9 @@ function deleteCategory() {
         console.log("new USer course json")
         sessionStorage.setItem('newUserCourseJson', JSON.stringify(outJ));
     } else if (cnum == null) { //new course
+        if(userData.classData == null){ //no courses in new user
+            userData.classData = { "currentCourses":[] }
+        }
         userData.classData.currentCourses.push(outJ);
         sessionStorage.setItem('json', JSON.stringify(userData));
     } else { //edit existing course

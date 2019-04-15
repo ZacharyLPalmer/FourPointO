@@ -175,15 +175,11 @@ function saveToJson() {
     }// For - Semester
     
     // TODO: remove this alert once default values are added
-    alert(message); // Show any missing info that has been auto filled.
+    //alert(message); // Show any missing info that has been auto filled.
 	
-    if(sessionStorage.getItem("json")==null)
-    {
         userData.semesterData = outJ;
         sessionStorage.setItem('json', JSON.stringify(userData));
-    } else {
-        sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
-    }
+        //sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
     
 }
 
@@ -326,10 +322,10 @@ function loadJson(data) {
         $("input[name=semesterName-"+s+"]").val(data.semesters[s].name);
 
         for( var c = 0; c < data.semesters[s].courses.length; c++) {
-            if(data.semesters[s].courses[c].major == 'true') {
+            if(data.semesters[s].courses[c].major == true) {
                 $('input[name=major-'+s+'-'+tUCID+']').attr('checked',true);
             }
-            $('input[name=major-'+s+'-'+tUCID+']').attr('checked');
+            //$('input[name=major-'+s+'-'+tUCID+']').attr('checked');
             $('input[name=courseName-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].name);
             $('input[name=creditNumber-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].credits);
             $('input[name=courseGrade-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].grade);
