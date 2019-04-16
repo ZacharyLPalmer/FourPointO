@@ -216,7 +216,7 @@ function deleteCategory() {
         average = parseFloat( courses[i].cells[2].children[0].value );
         if(weight && average) {
             outJ.cats.push(
-                {"Name": catName ,"Weight": weight ,"Average": average }
+                {"Name": catName ,"Weight": weight ,"Average": average}
             )
         }
     }

@@ -253,7 +253,7 @@ function updateScreen() {
                 {
                     if( isNaN(creditNumber))
                     {
-                        alert("Error: Credit amount must be a number. " + semName + " - " + corName +"'s GPA Cannot be calculated");
+                        //alert("Error: Credit amount must be a number. " + semName + " - " + corName +"'s GPA Cannot be calculated");
                         gpa = "N/a";
                     }
                     else if( (creditNumber < 1 || creditNumber > 4) )

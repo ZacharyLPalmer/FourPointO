@@ -37,9 +37,8 @@ function loadClassData(data) {
         $('a[name=grade-' + i + ']').text(data.currentCourses[i].Grade);
 
         //print major course info and also do gpa calcualtions
-        if(data.currentCourses[i].MajorCourse=='true') {
+        if(data.currentCourses[i].MajorCourse==true) {
             $('a[name=major-' + i + ']').text("Yes");
-
             majorGrade += (grade*credit);
             majorCreditCount += credit;
         } else {
