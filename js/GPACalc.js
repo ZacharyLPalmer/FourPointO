@@ -46,7 +46,7 @@ function newCourse(semID) {
 }
 
 function deleteSemester(id) {
-    $("div[name=semester-"+id+"]").remove();;
+    $("div[name=semester-"+id+"]").remove();
     removeA(activeSemesterIDs, parseFloat(id));
     activeCourseIDs[id]=[];
     if(activeSemesterIDs.length < 1) {
@@ -69,7 +69,8 @@ function printNewSemesterToScreen() {
     return '<div class="semester" name="semester-' + uniqueSemesterID + '">' + 
         '<div class="semesterName">Semester Name: ' +
             '<input type="text" name="semesterName-' + uniqueSemesterID + '">' +
-            '<button type="submit" class="deleteSemester deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
+            '<input class="deletebtn deleteSemester" name="'+ uniqueSemesterID +'" type="image" src="media/delete.png">' +
+            //'<button type="submit" class="deleteSemester deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
       '<table class="classList-'+ uniqueSemesterID +'">' +
@@ -98,7 +99,8 @@ function printNewCourseToScreen(semesterID) {
       '<td><input type="text" name="courseGrade-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><input type="text" name="creditNumber-' + semesterID + '-' + uniqueCourseID + '"></td>' +
       '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">N/a</div></td>' +
-      '<td><button  class="deletebtn deleteCourse" type="submit" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
+      '<td><input class="deletebtn deleteCourse" semester="'+ semesterID +'"  course="' + uniqueCourseID + '" type="image" src="media/delete.png"></td>' +
+      //'<td><button  class="deletebtn deleteCourse" type="submit" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
     '</tr>';
 }
 

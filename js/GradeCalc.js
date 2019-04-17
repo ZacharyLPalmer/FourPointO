@@ -14,7 +14,8 @@ function addCategory() {
         "<td><input type=\"text\" name=\"catName-" + catCount + "\"></td>" +
         "<td><input type=\"text\" class=\"weight\" name=\"catWeight-" + catCount + "\"></td>" +
         "<td><input type=\"text\" class=\"avg\" name=\"catAvg-" + catCount + "\"></td>" +
-        "<td><button class=\"deletebtn deleteCat\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
+        '<td><input class="deletebtn deleteCat" category=\"" + catCount + "\" type="image" src="media/delete.png"></td>' +
+        //"<td><button class=\"deletebtn deleteCat\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
     "</tr>";
 
     $(".categoryList").append( emptyCategroy );
@@ -304,9 +305,4 @@ $('input[name=user]').on('click',function() {
     } else { //not logged in
         window.location.href = "signin.html";
     }
-});
-
-
-$('button[name=saveCourse]').on('click',function() {
-    saveCourse();
 });

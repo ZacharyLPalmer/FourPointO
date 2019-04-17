@@ -146,7 +146,8 @@ function printNewClasses(num) {
         '<td><a name="major-'+i+'"></a></td>'+
         '<td><a name="credit-'+i+'"></a></td>'+
         '<td><a name="grade-'+i+'"></a></td>'+
-        '<td><button onclick="location.href=\'GradeCalc.html?course='+i+'\';" class="deletebtn" name="editCourse-'+i+'">Edit</button></td>'+
+        '<td><button onclick="location.href=\'GradeCalc.html?course='+i+'\';" class="editbtn" name="editCourse-'+i+'">EDIT</button></td>'+
+        '<td><input class="deletebtn deleteCourse" courseNum='+i+' type="image" src="media/delete.png"></td>' +
         '</tr>'
         $(".classes").append(newTR);
     }
@@ -190,6 +191,16 @@ $('input[name=user]').on('click',function() {
     } else { //not logged in
         window.location.href = "signin.html";
     }
+});
+
+$('.classes').on('click','.deleteCourse',function() {
+    var index = $(this).attr('courseNum');
+    var userData = JSON.parse(sessionStorage.getItem('json'));
+    $("tr[name=course-"+index+"]").remove();
+    userData.classData.currentCourses.splice(index, 1);
+    sessionStorage.setItem('json', JSON.stringify(userData));
+    curUser = firebase.auth().currentUser
+    firebase.database().ref('users/' + curUser.uid).set(userData);
 });
 
 
