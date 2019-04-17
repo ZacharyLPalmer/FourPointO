@@ -63,13 +63,24 @@ function loadUserJson() {
 }
 
 function createNewUserFromSemesterJson(newUserData) {
-    var username = JSON.parse(localStorage.getItem('FourPointO:authUser'));
+    var username = JSON.parse(sessionStorage.getItem('FourPointO:authUser'));
+    var semesterData = JSON.parse(sessionStorage.getItem('newjson'));
+    if(semesterData != null) {
+        data = {
+            "UserID": username.email,
+            semesterData,
+            "classData":   
+            { "currentCourses":[] }
+        }
+    } else {
     data = {
         "UserID": username.email,
-        "semesterData": newUserData,
+        "semesterData":
+        { "semesters":[] },
         "classData":   
         { "currentCourses":[] }
     }
+}
     sessionStorage.setItem('json',JSON.stringify(data));
 }
   
@@ -85,7 +96,12 @@ function loadData() {
         //retrieve json snapshot
         firebase.database().ref('/users/' + user.uid).once('value', function(snapshot) {
             // The callback succeeded
-            sessionStorage.setItem('json', JSON.stringify(snapshot.val()));
+            var snapshot = snapshot.val()
+            if(snapshot == null) {
+                createNewUserFromSemesterJson(null);
+            } else {
+                sessionStorage.setItem('json', JSON.stringify(snapshot));
+            }
             loadUserJson();
 
         }, function(error) {

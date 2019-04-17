@@ -176,10 +176,14 @@ function saveToJson() {
     
     // TODO: remove this alert once default values are added
     //alert(message); // Show any missing info that has been auto filled.
-	
-        userData.semesterData = outJ;
-        sessionStorage.setItem('json', JSON.stringify(userData));
+    console.log(outJ);
+    if(userData == null) { //no account yet redirect with the option to use this data on a new account
+        sessionStorage.setItem('newjson', JSON.stringify(outJ));
+    } else {
+    userData.semesterData = outJ;
+    sessionStorage.setItem('json', JSON.stringify(userData));
         //sessionStorage.setItem('newUserSemesterJson', JSON.stringify(outJ));
+    }
     
 }
 
@@ -339,11 +343,11 @@ function loadJson(data) {
 $(document).ready(function () {
     userData = JSON.parse(sessionStorage.getItem('json'));
     console.log(userData);
-    if(userData != null)
+    if(userData == null || userData.semesterData.semesters == "")
     {
-        loadJson(userData.semesterData)
-    } else {
         newSemester(4);
+    } else {
+        loadJson(userData.semesterData)
     }
 });
 
@@ -374,7 +378,7 @@ $('button[name=loadTest]').on('click',function() {
     loadJson();
 });
 
-$('.semesterList').on('blur','input',function() {
+$('.semesterList').on('change',function() { // using 'blur', 'input' can cause infinte calls when tabbing
     updateScreen();
 });
 

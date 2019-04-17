@@ -47,3 +47,18 @@ function drawChart() {
   chart.draw(data, options);
 }
 
+$(document).ready(function () {
+    var dataObject = null;
+    console.log(dataObject);
+    //user = firebase.auth().currentUser
+    //retrieve json snapshot
+    console.log("test1");
+    //firebase.database().ref('/users/').on('value', function(snapshot) {
+    //    snapshot.forEach(function(childSnapshot) {
+    //      var childData = childSnapshot.val();
+    //      console.log(childData);
+    //    });
+    //});
+});
+
+
