@@ -1,49 +1,35 @@
 google.charts.load("current", {packages:["corechart"]});
 google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['Grade', 'Frequency'],
-    [
-        'A',2
-    ],
-    [
-        'A-',4
-    ],
-    [
-        'B+',6
-    ],
-    [
-        'B',10
-    ],
-    [
-        'B-',9
-    ],
-    [
-        'C+',5
-    ],
-    [
-        'C',4
-    ],
-    [
-        'C-',2
-    ],
-    [
-        'D+',0
-    ],
-    [
-        'D',1
-    ],
-    [
-        'F',2
-    ]
-]);
+
+var user = JSON.parse(sessionStorage.getItem('json'));
+
+var dataarray = []
+
+dataarray.push(['Semester', 'GPA', 'Major GPA']);
+
+for(var s = 0; s < user.semesterData.semesters.length; s++) {
+    dataarray.push([user.semesterData.semesters[s].name, parseFloat(user.semesterData.semesters[s].GPA), parseFloat(user.semesterData.semesters[s].MajorGPA)]);
+}
+console.log(dataarray);
+
+  var data = google.visualization.arrayToDataTable(dataarray);
 
   var options = {
-    title: 'Grade Distribution',
-    legend: { position: 'none' },
+    title: 'Your GPA Trend Over Time',
+    curveType: 'function',
+    legend: { position: 'bottom' },
+    interpolateNulls: true,
+    vAxis: {
+        maxValue: 4.00,
+        viewWindow: {
+            max: 4.25
+        }
+    }
+
   };
 
-  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+  var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
   chart.draw(data, options);
 }
 
@@ -60,5 +46,3 @@ $(document).ready(function () {
     //    });
     //});
 });
-
-
