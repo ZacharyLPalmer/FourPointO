@@ -11,9 +11,9 @@ function addCategory() {
 
     var emptyCategroy = 
     "<tr class=\"category\" name=cat-"+ catCount +"\">" +
-        "<td><input type=\"text\" name=\"catName-" + catCount + "\"></td>" +
-        "<td><input type=\"text\" class=\"weight\" name=\"catWeight-" + catCount + "\"></td>" +
-        "<td><input type=\"text\" class=\"avg\" name=\"catAvg-" + catCount + "\"></td>" +
+        "<td><input type=\"text\" name=\"catName-" + catCount + "\"  size='35' placeholder='Catagory Name'</td>" +
+        "<td><input type=\"text\" class=\"weight\" name=\"catWeight-" + catCount + "\" size='5'  placeholder='Weight'></td>" +
+        "<td><input type=\"text\" class=\"avg\" name=\"catAvg-" + catCount + "\" size='5' placeholder='Average'></td>" +
         '<td><input class="deletebtn deleteCat" category=\"" + catCount + "\" type="image" src="media/delete.png"></td>' +
         //"<td><button class=\"deletebtn deleteCat\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
     "</tr>";
@@ -92,7 +92,8 @@ function deleteCategory() {
         // Assume grade will be 100
         if( currAvg == "" )
         {
-            currAvg = 100;
+            isValid = false;
+            break;
         }
 
         currWeight = parseFloat( currWeight );
@@ -130,13 +131,7 @@ function deleteCategory() {
     }
 	
     // Check weight adds up to 100
-    if(totalWeight == 100) {
-        $('div[name=currentGrade]').html((grade/totalWeight*100).toFixed(2)+'%');
-    } else {
-        $('div[name=currentGrade]').html(grade.toFixed(2)+'/'+totalWeight.toFixed(2));
-        //isValid = false;
-        //errorMessage = "Error: Weight total does not add up to 100. ";
-    }
+    $('div[name=currentGrade]').html((grade/totalWeight*100).toFixed(2)+'%');
 
  }
 /*
@@ -163,7 +158,7 @@ function deleteCategory() {
     console.log("saveCourse() - clicked");
     var grade = $('div[name=currentGrade]').text();
     var name = $('input[name=courseName]').val();
-    var creditNumber = $('input[name=creditNumber]').val();
+    var creditNumber = $('select[name=creditNumber] option:selected').text();
     var majorCourse = false;
     
     // Validate Input
@@ -246,7 +241,7 @@ function deleteCategory() {
 function loadJson(data) {
     console.log(data);
     $('input[name=courseName]').val(data.Name);
-    $('input[name=creditNumber]').val(data.CreditNumber);
+    $('select[name=creditNumber]').val(data.CreditNumber);
     if(data.MajorCourse == 'true') {
         $('input[name=major]').attr('checked',true);
     } else {

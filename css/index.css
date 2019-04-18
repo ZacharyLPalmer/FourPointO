@@ -34,7 +34,11 @@ body {
 }
 
 .semesterName{
-  padding-bottom:25px;
+  font-size:20pt;
+  text-align: center;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .button {

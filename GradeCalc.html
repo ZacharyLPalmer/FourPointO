@@ -31,18 +31,16 @@
     </div>
     <div class="container">
     <!--top bar information for the displayed course-->
-      <table class="overallDisplay">
-        <tr>
-          <th>Course Name</th>
-          <th>Credit #</th>
-          <th>Major?</th>
-        </tr>
-        <tr>
-          <td><input type="text" name="courseName"></td>
-          <td><input type="text" name="creditNumber"></td>
-          <td><input type="checkbox" name="major" value="major"></td>
-        </tr>
-      </table>
+    <input class="semesterName" type="text" name="courseName" size='20' placeholder="Course Name">
+    <br>
+      Credit Number: <select name="creditNumber">
+      <option value="1">1</option>'+
+      <option value="2">2</option>'+
+      <option value="3">3</option>'+
+      <option value="4">4</option>'+
+      </select>
+      <br><br>
+      Major Course: <input type="checkbox" name="major" value="major">
 
       <div class="classGrade">
         <table class="categoryList" id="catList">

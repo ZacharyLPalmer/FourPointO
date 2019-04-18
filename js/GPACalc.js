@@ -67,16 +67,16 @@ function deleteCourse(semID,cID) {
 
 function printNewSemesterToScreen() {
     return '<div class="semester" name="semester-' + uniqueSemesterID + '">' + 
-        '<div class="semesterName">Semester Name: ' +
-            '<input type="text" name="semesterName-' + uniqueSemesterID + '">' +
+        '<div>' +
+            '<input type="text" class="semesterName" name="semesterName-' + uniqueSemesterID + '" placeholder = "Semester Name">' +
             '<input class="deletebtn deleteSemester" name="'+ uniqueSemesterID +'" type="image" src="media/delete.png">' +
             //'<button type="submit" class="deleteSemester deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
-      '<table class="classList-'+ uniqueSemesterID +'">' +
+      '<table class="classList classList-'+ uniqueSemesterID +'">' +
         '<!--Heading for the course list table for this semester-->' +
         '<tr>'+
-            '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit #</th><th>GPA</th><th></th>'+
+            '<th>Major?</th><th>Course Name</th><th>Grade</th><th>Credit</th><th>GPA</th><th></th>'+
         '</tr>' +
         '<!--This will be a div that gets duplicated and removed as classes get added or removed dynamically-->' +
         '<!--Here is where other courses would get added -->' +
@@ -95,9 +95,26 @@ function printNewSemesterToScreen() {
 function printNewCourseToScreen(semesterID) {
     return newDiv = '<tr name="course-'+ semesterID +'-'+ uniqueCourseID +'">'+
       '<td><input type="checkbox" name="major-' + semesterID + '-' + uniqueCourseID + '" value="major"></td>' +
-      '<td><input type="text" name="courseName-' + semesterID + '-' + uniqueCourseID + '"></td>' + 
-      '<td><input type="text" name="courseGrade-' + semesterID + '-' + uniqueCourseID + '"></td>' +
-      '<td><input type="text" name="creditNumber-' + semesterID + '-' + uniqueCourseID + '"></td>' +
+      '<td><input type="text" name="courseName-' + semesterID + '-' + uniqueCourseID + '" size="35" placeholder="Course Name"></td>' + 
+      '<td><select name="courseGrade-' + semesterID + '-' + uniqueCourseID + '">'+
+        '<option value="A">A</option>'+
+        '<option value="A-">A-</option>'+
+        '<option value="B+">B+</option>'+
+        '<option value="B">B</option>'+
+        '<option value="B-">B-</option>'+
+        '<option value="C+">C+</option>'+
+        '<option value="C">C</option>'+
+        '<option value="C-">C-</option>'+
+        '<option value="D+">D+</option>'+
+        '<option value="D">D</option>'+
+        '<option value="F">F</option>'+
+        '</select></td>' +
+      '<td><select name="creditNumber-' + semesterID + '-' + uniqueCourseID + '">'+
+      '<option value="1">1 Credits</option>'+
+      '<option value="2">2 Credits</option>'+
+      '<option value="3">3 Credits</option>'+
+      '<option value="4">4 Credits</option>'+
+        '</select></td>' +
       '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">N/a</div></td>' +
       '<td><input class="deletebtn deleteCourse" semester="'+ semesterID +'"  course="' + uniqueCourseID + '" type="image" src="media/delete.png"></td>' +
       //'<td><button  class="deletebtn deleteCourse" type="submit" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
@@ -139,6 +156,7 @@ function saveToJson() {
         outJ.semesters[s].MajorGPA =majorGPA; 
         
         for( var c = 0; c < activeCourseIDs[sem].length; c++) {
+            if($('input[name=courseName-'+sem+'-'+cor+']').val() != "") {
             outJ.semesters[s].courses.push(
                 { "name":"" ,"major":"" ,"credits":"" ,"grade":"" ,"GPA":""}
             )
@@ -151,10 +169,10 @@ function saveToJson() {
             }
             //get value of course Name
             var courseName = $('input[name=courseName-'+sem+'-'+cor+']').val();
-            //get value of credit Number
-            var creditNumber = parseFloat($('input[name=creditNumber-'+sem+'-'+cor+']').val());
+            //get value of credit Number $('#Crd option:selected').text();
+            var creditNumber = parseFloat($('select[name=creditNumber-'+sem+'-'+cor+'] option:selected').text());
             //get value of grade
-            var courseGrade = $('input[name=courseGrade-'+sem+'-'+cor+']').val().toUpperCase();
+            var courseGrade = $('select[name=courseGrade-'+sem+'-'+cor+'] option:selected').text();
             //getValue of GPA
             var GPA = $('div[name=GPAOutput-'+sem+'-'+cor+']').text();
 
@@ -174,6 +192,7 @@ function saveToJson() {
             }
 
         }// For - courses
+    }
     }// For - Semester
     
     // TODO: remove this alert once default values are added
@@ -221,7 +240,7 @@ function updateScreen() {
                     corName = "course-" + (c+1); 
                 }
 
-                var grade = $('input[name=courseGrade-'+sem+'-'+cor+']').val();
+                var grade = $('select[name=courseGrade-'+sem+'-'+cor+'] option:selected').text();
                 grade = grade.toUpperCase();
                 var gpa = "N/a"
             
@@ -253,7 +272,7 @@ function updateScreen() {
                    alert("Error: Grade is not Valid. " + semName + " - " + corName +"'s GPA Cannot be calculated - ");
                 }
 
-                var creditNumber = parseFloat($('input[name=creditNumber-'+sem+'-'+cor+']').val())
+                var creditNumber = parseFloat($('select[name=creditNumber-'+sem+'-'+cor+'] option:selected').text());
                 
                 if( gpa != "N/a" ) // Don't bother calculating if grade is bad
                 {
@@ -333,8 +352,8 @@ function loadJson(data) {
             }
             //$('input[name=major-'+s+'-'+tUCID+']').attr('checked');
             $('input[name=courseName-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].name);
-            $('input[name=creditNumber-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].credits);
-            $('input[name=courseGrade-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].grade);
+            $('select[name=creditNumber-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].credits);
+            $('select[name=courseGrade-'+s+'-'+tUCID+']').val(data.semesters[s].courses[c].grade);
             tUCID++;
         }
     }
