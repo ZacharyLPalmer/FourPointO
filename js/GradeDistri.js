@@ -34,6 +34,10 @@ console.log(dataarray);
 }
 
 $(document).ready(function () {
+  // If the user isn't logged in, reidrect
+  if(!sessionStorage.getItem("infoLoaded"))
+    window.location.href = "signin.html";
+
     var dataObject = null;
     console.log(dataObject);
     //user = firebase.auth().currentUser
@@ -45,4 +49,15 @@ $(document).ready(function () {
     //      console.log(childData);
     //    });
     //});
+
+
+    $('input[name=user]').on('click',function() {
+      //logged in
+      if(sessionStorage.getItem("infoLoaded")) { 
+          window.location.href = "home.html";
+      } else { //not logged in
+          window.location.href = "signin.html";
+      }
+    });
+
 });

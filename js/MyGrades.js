@@ -203,8 +203,6 @@ $('.classes').on('click','.deleteCourse',function() {
     firebase.database().ref('users/' + curUser.uid).set(userData);
 });
 
-
-
 // can be ignored, just a playground for creating JSON's
 var testUserData =
 {

@@ -1,6 +1,6 @@
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: slategrey;
+  background-color:  rgb(102, 151, 182);
   overflow: hidden;
 }
 
@@ -80,6 +80,7 @@ body {
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   display:inline-block;
   color:white;
+  vertical-align: middle;
 }
 
 .currentGrade{
@@ -157,15 +158,16 @@ body {
     background-color: lightgray;
     text-align: center;
     display: inline-block;
+    vertical-align: middle;
     width: 200px;
     height: 40px;
-    margin: 10px;
-    
+    margin: 10px;   
   }
 
-  .currentGradeWrapper {
-    width: 900px;
+  .currentGradeWrapper{
+    margin-top: 10px;
   }
+
 
 .logo {
   margin: auto;
@@ -228,4 +230,27 @@ width: 800px;
   height: 40px;
   padding: 5px;
   float: right;
+}
+
+#grade_title_row th, #grade_info_row td{
+  padding: 4px;
+}
+
+#grade_info_row td input{
+  margin: 0px;
+}
+
+table, th, td{
+  border-collapse: collapse;
+  padding-right: 10px;
+}
+
+.semesters tr:nth-child(even), .classes tr:nth-child(even)
+{
+  background-color: rgb(142, 191, 222);
+}
+
+.semesters tr td{
+  padding: 15px;
+  
 }

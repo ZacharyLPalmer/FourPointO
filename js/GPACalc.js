@@ -404,6 +404,7 @@ $('.semesterList').on('change',function() { // using 'blur', 'input' can cause i
 });
 
 $('input[name=user]').on('click',function() {
+
     //logged in
     if(sessionStorage.getItem("infoLoaded")) { 
         window.location.href = "home.html";
