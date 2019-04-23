@@ -242,7 +242,7 @@ function loadJson(data) {
     console.log(data);
     $('input[name=courseName]').val(data.Name);
     $('select[name=creditNumber]').val(data.CreditNumber);
-    if(data.MajorCourse == 'true') {
+    if(data.MajorCourse==true) {
         $('input[name=major]').attr('checked',true);
     } else {
         $('input[name=major]').attr('checked',false);

@@ -39,20 +39,22 @@ function loadClassData(data) {
         //print major course info and also do gpa calcualtions
         if(data.currentCourses[i].MajorCourse==true) {
             $('a[name=major-' + i + ']').text("Yes");
-            majorGrade += (grade*credit);
+            majorGrade += ((percentToGPA(grade/100))*credit);
             majorCreditCount += credit;
         } else {
             $('a[name=major-' + i + ']').text("No");
         }
-        overallGrade += (grade*credit);
+        overallGrade += ((percentToGPA(grade/100))*credit);
         overallCreditCount += credit;
     }
 
     //calcualte and print final gpa
-    var finalMajorGrade = majorGrade/majorCreditCount;
-    var finalGrade = overallGrade/overallCreditCount;
-    $('div[name=semGPA]').text(percentToGPA(finalGrade/100));
-    $('div[name=semMajorGPA]').text(percentToGPA(finalMajorGrade/100));
+    var finalMajorGrade = (majorGrade/majorCreditCount).toFixed(2);
+    var finalGrade = (overallGrade/overallCreditCount).toFixed(2);
+    console.log("semester major percentage: " + finalMajorGrade);
+    console.log("semester percentage: " + finalGrade);
+    $('div[name=semGPA]').text(finalGrade);
+    $('div[name=semMajorGPA]').text(finalMajorGrade);
 }
 
 //calls the semester and class data loaders
