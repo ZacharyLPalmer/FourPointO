@@ -1,17 +1,21 @@
 google.charts.load("current", {packages:["corechart"]});
 google.charts.setOnLoadCallback(drawChart);
+
 function drawChart() {
 
-var user = JSON.parse(sessionStorage.getItem('json'));
+  var user = JSON.parse(sessionStorage.getItem('json'));
 
-var dataarray = []
+  var dataarray = []
 
-dataarray.push(['Semester', 'GPA', 'Major GPA']);
-
-for(var s = 0; s < user.semesterData.semesters.length; s++) {
-    dataarray.push([user.semesterData.semesters[s].name, parseFloat(user.semesterData.semesters[s].GPA), parseFloat(user.semesterData.semesters[s].MajorGPA)]);
-}
-console.log(dataarray);
+  dataarray.push(['Semester', 'GPA', 'Major GPA']);
+  
+  for(var s = 0; s < user.semesterData.semesters.length; s++) 
+  {
+      dataarray.push([user.semesterData.semesters[s].name, 
+        parseFloat(user.semesterData.semesters[s].GPA), 
+        parseFloat(user.semesterData.semesters[s].MajorGPA)]);
+  }
+  console.log(dataarray);
 
   var data = google.visualization.arrayToDataTable(dataarray);
 
@@ -30,13 +34,22 @@ console.log(dataarray);
   };
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
   chart.draw(data, options);
+  
 }
 
 $(document).ready(function () {
   // If the user isn't logged in, reidrect
-  if(!sessionStorage.getItem("infoLoaded"))
+  if(sessionStorage.getItem("infoLoaded"))
+  {
+    //NOP
+  }
+  else
+  {
     window.location.href = "signin.html";
+  }
+    
 
     var dataObject = null;
     console.log(dataObject);

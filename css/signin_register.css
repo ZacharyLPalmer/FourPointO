@@ -93,7 +93,8 @@ button:hover {
 #signin,
 #signup {
     text-decoration: none;
-    color: slategray;
+    font-weight: bolder;
+    color: rgb(101, 152, 184);
 }
 
 img {

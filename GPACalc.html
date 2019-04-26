@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
+  <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="icon" href="media/favicon.png">
+  <title>GPA Calculation</title>
+
   <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
@@ -12,56 +16,44 @@
 </head>
 
 <body>
-
-<div id="appWrap" class="applicationWrapper">
-    <div class="topnav">
-        <a class="active" onclick="location.href='GPACalc.html';">GPA Calculation</a>
-        <a onclick="location.href='GradeCalc.html';">Grade Calculation </a>
-        <a onclick="location.href='GradeDistri.html';">Grade Distribution</a>
-        <a onclick="location.href='MyGrades.html';">My Grades</a>
-        <input class="close" name="user" type="image" src="media/user.png">
+  <div id="appWrap" class="applicationWrapper">
+      <div class="topnav">
+          <a class="active" onclick="location.href='GPACalc.html';">GPA Calculation</a>
+          <a onclick="location.href='GradeCalc.html';">Grade Calculation </a>
+          <a onclick="location.href='GradeDistri.html';">Grade Distribution</a>
+          <a onclick="location.href='MyGrades.html';">My Grades</a>
+          <input class="close" name="user" type="image" src="media/user.png">
       </div>
-<!--
-  <ul class="nav">
-    <li>
-      <button class="active" onclick="location.href='GPACalc.html';">GPA Calculation</button>
-    </li>
-    <li>
-      <button onclick="location.href='GradeCalc.html';">Grade Calculation</button>
-    </li>
-    <li>
-      <button onclick="location.href='GradeDistri.html';">Grade Distribution</button>
-    </li>
-    <li>
-      <button onclick="location.href='MyGrades.html';">My Grades</button>
-    </li>
-  </ul>
--->
 
-<!--logo div-->
-<div class="logo">
-  <img src="media/logo.png" alt="logo">
-</div>
-<div class="container">
-<div class="overallDisplay">
-  <!--displays your overall gpa/major gpa -->
-  <div class="leftGPA" name="wrapGPA">Overall GPA: <div name="GPA">N/a</div></div>
-  <div class="rightGPA" name="wrapmajorGPA">Overall Major GPA: <div name="majorGPA">N/a</div></div>
-  <!--displays your overall gpa/major gpa -->
-  <button class="button" name="addSemester">Add Semester</button>
-  <button class="button" name="saveData">Save Data</button>
-</div>
+  <!--logo div-->
+  <div class="logo">
+    <img src="media/logo.png" alt="logo">
+  </div>
 
-<div class="semesterList">
-<!---This will be a div that gets duplicated and
-  removed as semesters get added or removed dynamically
-  -->
+  <div class="container">
+    <div class="overallDisplay">
+      <!--displays your overall gpa/major gpa -->
+      <div class="leftGPA" name="wrapGPA">Overall GPA: <div name="GPA">N/a</div></div>
+      <div class="rightGPA" name="wrapmajorGPA">Overall Major GPA: <div name="majorGPA">N/a</div></div>
+      <!--displays your overall gpa/major gpa -->
+      <button id="addCourseBtn" class="button" name="addSemester">
+        <img src="media/add.png">
+        <p>Add Semester</p>
+      </button>
+      <button id="saveCourseBtn" class="button" name="saveData">
+        <img src="media/save.png">
+        <p>Save Data</p>
+      </button>
+    </div>
 
+    <div class="semesterList">
+    <!---This will be a div that gets duplicated and
+      removed as semesters get added or removed dynamically
+      -->
+    </div>
+  </div>
 
-</div>
-</div>
-
-<script src="js/GPACalc.js"></script>
+  <script src="js/GPACalc.js"></script>
 
 </body>
 </html>

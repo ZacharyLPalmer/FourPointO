@@ -3,77 +3,90 @@
 <head>
   <meta charset="utf-8"/>
   <link rel="stylesheet" type="text/css" href="css/index.css">
-  <title>Four Point O</title>
+  <link rel="icon" href="media/favicon.png">
+  <title>Grade Calculation</title>
+
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
 </head>
 
 <body>
   <div class="applicationWrapper">
       <div class="topnav">
-          <a onclick="location.href='GPACalc.html';">GPA Calculation</a>
-          <a class="active" onclick="location.href='GradeCalc.html';">Grade Calculation </a>
-          <a onclick="location.href='GradeDistri.html';">Grade Distribution</a>
-          <a onclick="location.href='MyGrades.html';">My Grades</a>
-          <input class="close" name="user" type="image" src="media/user.png">
+            <a onclick="location.href='GPACalc.html';">GPA Calculation</a>
+            <a class="active" onclick="location.href='GradeCalc.html';">Grade Calculation </a>
+            <a onclick="location.href='GradeDistri.html';">Grade Distribution</a>
+            <a onclick="location.href='MyGrades.html';">My Grades</a>
+            <input class="close" name="user" type="image" src="media/user.png">        
+      </div>
+
+      <!--logo div-->
+      <div class="logo">
+          <img src="media/logo.png" alt="logo">
+      </div>
+
+      <div class="semester">
+      <!--top bar information for the displayed course-->
+    
+        <div>
+          <table>
+            <tr id="grade_title_row">
+              <th>Major?</th>
+              <th>Course Name</th>
+              <th>Credit</th>
+            </tr>
+            <tr id="grade_info_row">
+              <td><input type="checkbox" name="major" value="major"></td>
+              <td><input id="courseName" class="semesterName" type="text" name="courseName" size='20' placeholder="Course Name"></td>
+              <td><select name="creditNumber">
+                  <option value="1">1</option>'+
+                  <option value="2">2</option>'+
+                  <option value="3">3</option>'+
+                  <option value="4">4</option>'+
+                </select></td>
+            </tr>
+          </table>
         </div>
 
-    <!--logo div-->
-    <div class="logo">
-        <img src="media/logo.png" alt="logo">
+        <div class="currentGradeWrapper">
+            <div class="currentGrade">Current Grade: 
+              <div name="currentGrade">N/a</div>
+            </div>
+            <button id="saveCourseBtn" class="button" name="saveCourse">
+              <img src="media/save.png">
+              <p>Save Course</p>
+            </button> 
+        </div>
+
+        <div class="classGrade">
+          <table class="categoryList" id="catList">
+            <tr>
+              <th>Category</th>
+              <th>Weight %</th>
+              <th>Average %</th>
+              <th></th>
+            </tr>
+            
+          <!--This gets duplicated and removed as categories get added or removed dynamically-->
+          
+          </table>
+        </div>
+
+        <!--current semester grades displayed along with the save course and addcategory options-->
+        <div id="overallDisplay">
+          <button id="addCourseBtn" class="button" name="addCat">
+            <img src="media/add.png">
+            <p>Add Catagory</ap>
+          </button> 
+        </div>
+      </div>
     </div>
 
-    <div class="semester">
-    <!--top bar information for the displayed course-->
-    
-      <div>
-        <table>
-          <tr id="grade_title_row">
-            <th>Major?</th>
-            <th>Course Name</th>
-            <th>Credit</th>
-          </tr>
-          <tr id="grade_info_row">
-            <td><input type="checkbox" name="major" value="major"></td>
-            <td><input id="courseName" class="semesterName" type="text" name="courseName" size='20' placeholder="Course Name"></td>
-            <td><select name="creditNumber">
-                <option value="1">1</option>'+
-                <option value="2">2</option>'+
-                <option value="3">3</option>'+
-                <option value="4">4</option>'+
-              </select></td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="currentGradeWrapper">
-          <div class="currentGrade">Current Grade: 
-            <div name="currentGrade">N/a</div>
-          </div>
-          <button id="saveCourseBtn" class="button" name="saveCourse">Save Course</button> 
-      </div>
-
-      <div class="classGrade">
-        <table class="categoryList" id="catList">
-          <tr>
-            <th>Category</th>
-            <th>Weight %</th>
-            <th>Average %</th>
-            <th></th>
-          </tr>
-          
-        <!--This gets duplicated and removed as categories get added or removed dynamically-->
-        
-        </table>
-      </div>
-
-      <!--current semester grades displayed along with the save course and addcategory options-->
-      <div id="overallDisplay">
-        <button class="button" name="addCat"><a>Add Catagory</a></button> 
-      </div>
-  </div>
-  </div>
-    <!-- Javascript and Jquery sources -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/GradeCalc.js"></script>
-    
   </body>
 </html>

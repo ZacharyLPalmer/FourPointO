@@ -195,14 +195,18 @@ $('input[name=user]').on('click',function() {
     }
 });
 
-$('.classes').on('click','.deleteCourse',function() {
-    var index = $(this).attr('courseNum');
-    var userData = JSON.parse(sessionStorage.getItem('json'));
-    $("tr[name=course-"+index+"]").remove();
-    userData.classData.currentCourses.splice(index, 1);
-    sessionStorage.setItem('json', JSON.stringify(userData));
-    curUser = firebase.auth().currentUser
-    firebase.database().ref('users/' + curUser.uid).set(userData);
+$('.classes').on('click','.deleteCourse',function() 
+{
+    if( confirm("Are you sure you want to delete this course?") )
+    {
+        var index = $(this).attr('courseNum');
+        var userData = JSON.parse(sessionStorage.getItem('json'));
+        $("tr[name=course-"+index+"]").remove();
+        userData.classData.currentCourses.splice(index, 1);
+        sessionStorage.setItem('json', JSON.stringify(userData));
+        curUser = firebase.auth().currentUser
+        firebase.database().ref('users/' + curUser.uid).set(userData);
+    }
 });
 
 // can be ignored, just a playground for creating JSON's

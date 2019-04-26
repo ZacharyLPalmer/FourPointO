@@ -15,7 +15,6 @@ function addCategory() {
         "<td><input type=\"text\" class=\"weight\" name=\"catWeight-" + catCount + "\" size='5'  placeholder='Weight'></td>" +
         "<td><input type=\"text\" class=\"avg\" name=\"catAvg-" + catCount + "\" size='5' placeholder='Average'></td>" +
         '<td><input class="deletebtn deleteCat" category=\"" + catCount + "\" type="image" src="media/delete.png"></td>' +
-        //"<td><button class=\"deletebtn deleteCat\" type=\"submit\" class=\"deleteCat\" category=\"" + catCount + "\">Delete</button></td>" +
     "</tr>";
 
     $(".categoryList").append( emptyCategroy );
@@ -150,10 +149,6 @@ function deleteCategory() {
 
 */
 
-
- /**
-  * TODO: Save the data by sending it to some server
-  */
  function saveCourse() {
     console.log("saveCourse() - clicked");
     var grade = $('div[name=currentGrade]').text();
@@ -161,32 +156,22 @@ function deleteCategory() {
     var creditNumber = $('select[name=creditNumber] option:selected').text();
     var majorCourse = false;
     
-    // Validate Input
-    if(name == "") {
-        //print "no name" error
-        alert("Error: Enter a course name");
-        return;
-    }
-    
-    if(creditNumber == "") {
-        //print "no creditNumber" error
-        alert("Error: Enter a credit amount");
-        return;
-    }
-    else{
-        creditNumber = parseInt(creditNumber);
+    if( name == "" )
+    {
+        var promptData = prompt("Please eneter a course name", "Course-1");
 
-        if( isNaN(creditNumber) ){
-            alert("Error: Credit amount must be a number");
+        if( promptData != "" && promptData != null )
+        {
+            name = promptData;
+        }
+        else
+        {
             return;
         }
-        else if ( creditNumber < 1 || creditNumber > 4 ){
-            alert("Error: Credit amount must be within 1 - 4");
-            return;
-        }
-    }
+    }    
 
-    if( isValid == false ){
+    if( isValid == false )
+    {
         alert(errorMessage);
         return;
     }

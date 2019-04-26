@@ -70,7 +70,6 @@ function printNewSemesterToScreen() {
         '<div>' +
             '<input type="text" class="semesterName" name="semesterName-' + uniqueSemesterID + '" placeholder = "Semester Name">' +
             '<input class="deletebtn deleteSemester" name="'+ uniqueSemesterID +'" type="image" src="media/delete.png">' +
-            //'<button type="submit" class="deleteSemester deletebtn" name="'+ uniqueSemesterID +'">Delete</button>' +
         '</div>' +
     '<div>' +
       '<table class="classList classList-'+ uniqueSemesterID +'">' +
@@ -86,7 +85,7 @@ function printNewSemesterToScreen() {
         '<div class="leftGPA">GPA: <div name="GPA-' + uniqueSemesterID + '">N/a</div></div>' + 
         '<div class="rightGPA">Major GPA: <div name="majorGPA-' + uniqueSemesterID + '">N/a</div></div>' +
         '<!--button to add course to this semester-->' +
-        '<button class="button addCourse" name="' + uniqueSemesterID + '">Add course</button>' +
+        '<button class="button addCourse" name="' + uniqueSemesterID + '"><img src="media/add.png"><p>Add course</p></button>' +
       '</div>' +
     '</div>' +
   '</div>';
@@ -117,7 +116,6 @@ function printNewCourseToScreen(semesterID) {
         '</select></td>' +
       '<td><div name="GPAOutput-' + semesterID + '-' + uniqueCourseID + '">N/a</div></td>' +
       '<td><input class="deletebtn deleteCourse" semester="'+ semesterID +'"  course="' + uniqueCourseID + '" type="image" src="media/delete.png"></td>' +
-      //'<td><button  class="deletebtn deleteCourse" type="submit" semester="'+ semesterID +'" course="' + uniqueCourseID + '">Delete</button></td>' +
     '</tr>';
 }
 
@@ -381,8 +379,13 @@ $('.semesterList').on('click','.addCourse',function() {
 });
 
 $('.semesterList').on('click','.deleteSemester',function() {
-    deleteSemester($(this).attr('name'));
-    updateScreen();
+
+    if( confirm("Are you sure you want to delete this semester?") )
+    {
+        deleteSemester($(this).attr('name'));
+        updateScreen();
+    }
+    
 });
 
 $('.semesterList').on('click','.deleteCourse',function() {
@@ -404,7 +407,6 @@ $('.semesterList').on('change',function() { // using 'blur', 'input' can cause i
 });
 
 $('input[name=user]').on('click',function() {
-
     //logged in
     if(sessionStorage.getItem("infoLoaded")) { 
         window.location.href = "home.html";

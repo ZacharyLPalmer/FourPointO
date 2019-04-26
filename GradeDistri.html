@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-  <link rel="stylesheet" type="text/css" href="css/index.css">
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="icon" href="media/favicon.png">
+    <title>Grade Distribution</title>
+
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
-  <script type="text/javascript" src="js/GradeDistri.js"></script>
 </head>
 
 <!--Top nav bar-->
@@ -17,18 +20,18 @@
             <a class="active" onclick="location.href='GradeDistri.html';">Grade Distribution</a>
             <a onclick="location.href='MyGrades.html';">My Grades</a>
             <input class="close" name="user" type="image" src="media/user.png">
-          </div>
+        </div>
 
-<!--logo div-->
-<div class="logo">
-    <img src="media/logo.png" alt="logo">
-</div>
+        <!--logo div-->
+        <div class="logo">
+            <img src="media/logo.png" alt="logo">
+        </div>
 
-<div class="container">
-  <div id="chart_div" style="width: 900px; height: 500px;"></div>
-</div>
-</div>
-</div>
+        <div class="container">
+          <div id="chart_div" style="width: 900px; height: 500px;"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/GradeDistri.js"></script>
 </body>
-
 </html>
